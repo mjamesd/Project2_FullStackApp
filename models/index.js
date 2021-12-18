@@ -3,6 +3,7 @@ const Song = require('./Song');
 const Playlist = require('./Playlist');
 const ArtistsSongs = require('./ArtistsSongs');
 const PlaylistsSongs = require('./PlaylistsSongs')
+const User = require('./User');
 
 
 Artist.belongsToMany(Song, {through: ArtistsSongs})
@@ -16,5 +17,6 @@ module.exports = {
   Song,
   Playlist,
   ArtistsSongs,
-  PlaylistsSongs
+  PlaylistsSongs,
+  User
 };
