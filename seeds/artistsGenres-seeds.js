@@ -1,4 +1,4 @@
-const { ArtistsGenres } = require('../models/ArtistsGenres');
+// const { ArtistsGenres } = require('../models/ArtistsGenres');
 
 const artistGenreData = [
   {
