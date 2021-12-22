@@ -87,6 +87,6 @@ const songData = [
     }
 ]
 
-const seedSongs = () => Song.bulkCreate(songData);
+// const seedSongs = () => Song.bulkCreate(songData);
 
-module.exports = seedSongs;
+module.exports = songData;

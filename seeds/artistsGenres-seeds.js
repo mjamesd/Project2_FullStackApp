@@ -1,6 +1,6 @@
 const { ArtistsGenres } = require('../models/ArtistsGenres');
 
-const artistsGenresData = [
+const artistGenreData = [
   {
     artist_id: 1,
     genre_id: 1,
@@ -43,6 +43,6 @@ const artistsGenresData = [
   }
 ];
 
-const seedArtistsGenres = () => ArtistsGenres.bulkCreate(artistsSongsData);
+// const seedArtistsGenres = () => ArtistsGenres.bulkCreate(artistsSongsData);
 
-module.exports = seedArtistsGenres;
+module.exports = artistGenreData;

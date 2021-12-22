@@ -43,6 +43,6 @@ const artistData = [
     }
 ]
 
-const seedArtists = () => Artist.bulkCreate(artistData);
+// const seedArtists = () => Artist.bulkCreate(artistData);
 
-module.exports = seedArtists;
+module.exports = artistData;
