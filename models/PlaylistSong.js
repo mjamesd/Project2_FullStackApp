@@ -1,12 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connection.js');
 
-class PlaylistsSongs extends Model {}
+class PlaylistSong extends Model { }
 
-PlaylistsSongs.init(
+PlaylistSong.init(
   {
-    // define columns
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -14,20 +12,20 @@ PlaylistsSongs.init(
       autoIncrement: true
     },
     playlist_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-          model: 'playlist',
-          key: 'id'
+        model: 'playlist',
+        key: 'id'
       }
     },
     song_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        references: {
-            model: 'song',
-            key: 'id'
-        }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'song',
+        key: 'id'
+      }
     }
   },
   {
@@ -35,8 +33,8 @@ PlaylistsSongs.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'playslists_songs',
+    modelName: 'playslist_song',
   }
 );
 
-module.exports = PlaylistsSongs;
+module.exports = PlaylistSong;
