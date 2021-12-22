@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection.js');
 
-class Artist extends Model { }
+class Search extends Model { }
 
-Artist.init(
+Search.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,13 +11,9 @@ Artist.init(
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    term: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    imgur_url: {
-      type: DataTypes.STRING,
-      allowNull: true
     }
   },
   {
@@ -25,8 +21,8 @@ Artist.init(
     timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: 'artist',
+    modelName: 'search',
   }
 );
 
-module.exports = Artist;
+module.exports = Search;

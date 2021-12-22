@@ -1,12 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connection.js');
 
-class ArtistsSongs extends Model {}
+class ArtistGenre extends Model { }
 
-ArtistsSongs.init(
+ArtistGenre.init(
   {
-    // define columns
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -14,29 +12,29 @@ ArtistsSongs.init(
       autoIncrement: true
     },
     artist_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-          model: 'artist',
-          key: 'id'
+        model: 'artist',
+        key: 'id'
       }
     },
-    song_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        references: {
-            model: 'song',
-            key: 'id'
-        }
+    genre_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'genre',
+        key: 'id'
+      }
     }
   },
   {
     sequelize,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: 'artists_songs',
+    modelName: 'artist_genre',
   }
 );
 
-module.exports = ArtistsSongs;
+module.exports = ArtistGenre;
