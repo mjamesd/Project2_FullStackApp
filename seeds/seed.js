@@ -37,6 +37,8 @@ const seedDatabase = async () => {
 
   await PlaylistSong.bulkCreate(playlistSongData, bulkCreateOptions);
 
+  await 
+
   process.exit(0);
 };
 
