@@ -58,10 +58,6 @@ const songData = [
         imgur_url: 'https://i.imgur.com/eYEDvoa.jpg'
     },
     {
-        name: 'Jay-Z',
-        imgur_url: 'https://i.imgur.com/CZO4JNC.jpg'
-    },
-    {
         name: 'Empire State of Mind',
         imgur_url: 'https://i.imgur.com/VamMkSm.jpg'
     },
