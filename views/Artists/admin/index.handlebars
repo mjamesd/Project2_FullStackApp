@@ -1,0 +1,34 @@
+<h2>Artists</h2>
+<p>
+    <ul>
+        <li><a href="/api/artists/add">Add Artist</a></li>
+    </ul>
+</p>
+<div class="container">
+    <table style="border: 1px solid #000;">
+        <tr style="border: 1px solid #000;">
+            <td style="border: 1px solid #000;"><strong>ID</strong></td>
+            <td style="border: 1px solid #000;"><strong>Name</strong></td>
+            <td style="border: 1px solid #000;"><strong>Image</strong></td>
+            <td style="border: 1px solid #000;"><strong>Songs</strong></td>
+            <td style="border: 1px solid #000;"><strong>Actions</strong></td>
+        </tr>
+        {{#each artists as |artist|}}
+        <tr style="border: 1px solid #000;">
+            <td style="border: 1px solid #000;">{{artist.id}}</td>
+            <td style="border: 1px solid #000;">{{artist.name}}</td>
+            <td style="border: 1px solid #000;"><img src="{{artist.imgur_url}}" alt="{{artist.name}} image" style="max-width: 350px" /></td>
+            <td style="border: 1px solid #000;">
+                <a href="/api/songs/byArtist/{{artist.id}}">View Songs</a>
+            </td>
+            <td style="border: 1px solid #000;">
+                <ul>
+                    <li><a href="/api/artists/view/{{artist.id}}">View</a></li>
+                    <li><a href="/api/artists/edit/{{artist.id}}">Edit</a></li>
+                    <li><a href="/api/artists/delete/{{artist.id}}">Delete</a></li>
+                </ul>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</div>

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { Artist, ArtistGenre, ArtistSong, Genre, Playlist, PlaylistSong, Search, Song, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Prevent non logged in users from viewing the homepage
@@ -31,5 +31,6 @@ if (req.session.logged_in) {
 
   res.render('login');
 });
+
 
 module.exports = router;

@@ -1,0 +1,10 @@
+<h2>Songs by {{artist}}</h2>
+
+<div class="container">
+    {{#each songs as |song|}}
+    <div id="songs-{{song.id}}" class="songs listing">
+        <a href="/api/songs/{{song.id}}"><p>"{{song.name}}" by <strong>{{song.[artists.name]}}</strong></p>
+        <img src="{{song.imgur_url}}" alt="{{song.name}} by {{song.[artists.name]}} image" style="max-width: 350px" /></a>
+    </div>
+    {{/each}}
+</div>

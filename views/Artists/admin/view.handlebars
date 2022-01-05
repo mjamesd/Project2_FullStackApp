@@ -1,0 +1,65 @@
+<h2>View Artist: {{artist.[0].name}}</h2>
+
+<h3>Actions</h3>
+<ul>
+    <li><a href="/artists/{{artist.[0].id}}">Public View</a></li>
+    <li><a href="/api/artists/edit/{{artist.[0].id}}">Edit</a></li>
+    <li><a href="/api/artists/delete/{{artist.[0].id}}">Delete</a></li>
+</ul>
+
+<div id="view-artist-{{artist.[0].id}}" class="container">
+    <div class="artist row">
+        <dt>ID</dt>
+        <dl>{{artist.[0].id}}</dl>
+    </div>
+    <div class="artist row">
+        <dt>Name</dt>
+        <dl>{{artist.[0].name}}</dl>
+    </div>
+    <div class="artist row">
+        <dt>Imgur URL and Photo</dt>
+        <dl>
+            {{artist.[0].imgur_url}}<br />
+            <img class="image" src="{{artist.[0].imgur_url}}" alt="{{artist.[0].name}} Image" />
+        </dl>
+    </div>
+    <div class="artist row">
+        <dt>Created</dt>
+        <dl>{{artist.[0].createdAt}}</dl>
+    </div>
+    <div class="artist row">
+        <dt>Updated</dt>
+        <dl>{{artist.[0].updatedAt}}</dl>
+    </div>
+</div>
+
+{{#if artist.[1]}}
+<div id="view-artist-{{artist.[0].id}}-songs" class="container">
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Imgur URL</td>
+            <td>Created</td>
+            <td>Updated</td>
+            <td>Actions</td>
+        </tr>
+        {{#each artist as |song|}}
+        <tr>
+            <td>{{song.[songs.id]}}</td>
+            <td>{{song.[songs.name]}}</td>
+            <td><a href="{{song.[songs.imgur_url]}}" target="_blank">{{song.[songs.imgur_url]}}</a></td>
+            <td>{{song.[songs.createdAt]}}</td>
+            <td>{{song.[songs.updatedAt]}}</td>
+            <td>
+                <ul>
+                    <li><a href="/api/songs/{{song.[songs.id]}}">View</a></li>
+                    <li><a href="/api/songs/edit/{{song.[songs.id]}}">Edit</a></li>
+                    <li><a href="/api/songs/delete/{{song.[songs.id]}}">Delete</a></li>
+                </ul>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</div>
+{{/if}}
