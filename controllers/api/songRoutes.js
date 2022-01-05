@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Artist, Song } = require('../../models');
+const { Artist, Song, ArtistSong } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // get route to find Artist songs
@@ -23,23 +23,27 @@ router.get("/", (req, res) => {
 
 //get a single ArtistSong by  id
 router.get("/:id", (req, res) => {
-    ArtistSong.findOne({
+    Song.findOne({
+            raw: true,
             where: {
                 id: req.params.id,
             },
-            attributes: ["id", "artist_id", "song_id"],
+            // attributes: ["id", "artist_id", "song_id"],
             include: [{
                 model: Artist,
-                as: "artist",
+                // as: "Artist",
                 attributes: ["id", "name"],
-            }, ],
+            } 
+        ],
         })
         .then((dbArtistSongData) => {
             if (!dbArtistSongData) {
                 res.status(404).json({ message: "No ArtistSong found with this id" });
                 return;
             }
-            res.json(dbArtistSongData);
+            // res.json({song: dbArtistSongData});
+            // console.log('------------------------------->>>', dbArtistSongData);
+            res.render('songs-byId', {song: dbArtistSongData});
         })
         .catch((err) => {
             console.log(err);
@@ -57,13 +61,13 @@ router.get("/:id", (req, res) => {
 //                 },
 //             ]
 
-        });
-        res.json(dbArtistData)
-        console.log('artist data');
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    };
+    //     });
+    //     res.json(dbArtistData)
+    //     console.log('artist data');
+    // } catch (err) {
+    //     console.log(err);
+    //     res.status(500).json(err);
+    });
 });
 
 

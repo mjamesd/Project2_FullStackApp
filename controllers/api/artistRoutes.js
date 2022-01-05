@@ -210,6 +210,7 @@ router.delete("/:id", (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
+});
 
 // Edit an Artist
 router.put('/edit/:id', withAuth, async (req, res) => {
