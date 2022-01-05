@@ -3,9 +3,14 @@ const { Artist, Song, Playlist, Genre, Search, User, ArtistSong, ArtistGenre, Pl
 const artistData = require('./artist-seeds');
 const artistGenreData = require('./artistsGenres-seeds');
 const artistSongData = require('./artistSong-seeds');
+const playlistData = require('./playlist-seeds.js')
+const playlistSongData = require('./playlistSong-seeds.js')
+
+
 const songData = require('./songs-seeds');
 const genreData = require('./genre-seeds')
 const userData = require('./Users.json')
+
 
 const bulkCreateOptions = {
   individualHooks: true,
@@ -27,12 +32,13 @@ const seedDatabase = async () => {
 
   await User.bulkCreate(userData, bulkCreateOptions);
 
+  await Playlist.bulkCreate(playlistData, bulkCreateOptions);
+
   await ArtistSong.bulkCreate(artistSongData, bulkCreateOptions);
 
   await ArtistGenre.bulkCreate(artistGenreData, bulkCreateOptions);
 
-  // await PlaylistSong.bulkCreate(playlistSongData, bulkCreateOptions);
- 
+  await PlaylistSong.bulkCreate(playlistSongData, bulkCreateOptions);
 
   process.exit(0);
 };
