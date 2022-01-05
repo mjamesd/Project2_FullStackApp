@@ -19,7 +19,7 @@ const uploadImage = (event) => {
     fetch(`https://api.imgur.com/3/image/`, {
         method: `post`,
         headers: {
-            Authorization: `Client-ID 8572f0a99997de2` // process.env.IMGUR_API_CLIENT_ID
+            Authorization: `Client-ID ${process.env.API_CLIENT_ID}` // process.env.IMGUR_API_CLIENT_ID
         },
         body: formdata
     })

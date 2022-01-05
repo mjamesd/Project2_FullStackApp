@@ -3,7 +3,7 @@
 const searchBar = document.getElementById(`searchBar`);
 const searchForm = document.getElementById(`searchForm`);
 const searchOutput = document.getElementById(`searchOutput`);
-const happiApi = `https://api.happi.dev/v1/music?limit=5&apikey=8aa80fF4TsMsXsB2d59W5W467VbH3gss5bZhonBPURMZMU1opXZCRPQq&type=artist&lyrics=0&q=`;
+const happiApi = `https://api.happi.dev/v1/music?limit=5&apikey=${process.env.HAPPIDEV_KEY}&type=artist&lyrics=0&q=`;
 
 const handleSearch = (event) => {
     event.preventDefault();
