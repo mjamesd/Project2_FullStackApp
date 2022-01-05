@@ -3,75 +3,109 @@ const { Artist, ArtistSong } = require('../../models');
 const sequelize = require('../../config/connection');
 const withAuth = require('../../utils/auth');
 
-router.get('/', (req, res) => {
-
-    Post.findAll({
-            attributes: [
-                'id',
-                'name'
-            ],
-            order: [
-                ['DESC']
-            ],
+// get route to find Artist songs
+router.get("/", (req, res) => {
+    ArtistSong.findAll({
+            attributes: ["id", "artist_id", "song_id"],
             include: [{
-                    model: Artist,
-                    attributes: ['id', 'artist_id', 'name'],
-                    include: {
-                        model: ArtistSong,
-                        attributes: ['id', 'artist_id', 'song_id']
-                    }
-                },
-                {
-                    model: ArtistSong,
-                    attributes: ['id', 'song_id', 'artist_id']
-                },
-            ]
+                model: Artist,
+                as: "artist",
+                attributes: ["id", "name"],
+            }, ],
         })
-        .then(dbArtistData => {
-            res.json(dbArtistData)
-            console.log('artist data');
+        .then((dbArtistSongData) => {
+            res.json(dbArtistSongData);
         })
-        .catch(err => {
+        .catch((err) => {
             console.log(err);
             res.status(500).json(err);
         });
 });
 
-router.get('/:id', (req, res) => {
-    Post.findOne({
+//get a single ArtistSong by  id
+router.get("/:id", (req, res) => {
+    ArtistSong.findOne({
             where: {
-                id: req.params.id
+                id: req.params.id,
             },
-            attributes: [
-                'id',
-                'song_id',
-                'artist_id',
-            ],
-            include: [
-
-                {
-                    model: ArtistSong,
-                    attributes: ['id', 'song_id', 'artist_id']
-                },
-                {
-                    model: Artist,
-                    attributes: ['id', 'name'],
-                    include: {
-                        model: Artist,
-                        attributes: ['id', 'name', ]
-                    }
-                }
-            ]
+            attributes: ["id", "artist_id", "song_id"],
+            include: [{
+                model: Artist,
+                as: "artist",
+                attributes: ["id", "name"],
+            }, ],
         })
-        .then(dbArtistSong => {
-            if (!dbArtistSong) {
-                res.status(404).json({ message: 'No post found with this id' });
+        .then((dbArtistSongData) => {
+            if (!dbArtistSongData) {
+                res.status(404).json({ message: "No ArtistSong found with this id" });
                 return;
             }
-            res.json(dbArtistSong);
+            res.json(dbArtistSongData);
         })
-        .catch(err => {
+        .catch((err) => {
             console.log(err);
             res.status(500).json(err);
         });
 });
+
+
+router.post("/", (req, res) => {
+    // to add a new ArtistSong
+    ArtistSong.create({
+            name: req.body.name,
+            artist_id: req.body.artist_id,
+            song_id: req.body.song_id
+        })
+        .then((dbArtistSongData) => {
+            res.json(dbArtistSongData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+//update ArtistSong by id
+router.put("/:id", (req, res) => {
+
+    ArtistSong.update({
+            name: req.body.name,
+        }, {
+            where: {
+                id: req.params.id,
+            },
+        })
+        .then((dbArtistSongData) => {
+            if (!dbArtistSongData) {
+                res.status(404).json({ message: "No ArtistSong found with this id" });
+                return;
+            }
+            res.json(dbArtistSongData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json(err);
+        });
+});
+
+//to delete ArtistSong by id
+router.delete("/:id", (req, res) => {
+    ArtistSong.destroy({
+            where: {
+                id: req.params.id,
+            },
+        })
+        .then((dbArtistSongData) => {
+            if (!dbArtistSongData) {
+                res.status(404).json({ message: "No ArtistSong found with this id" });
+                return;
+            }
+            res.json(dbArtistSongData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+module.exports = router;
