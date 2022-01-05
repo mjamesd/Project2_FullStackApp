@@ -1,13 +1,11 @@
 const sequelize = require('../config/connection');
 const { Artist, Song, Playlist, Genre, Search, User, ArtistSong, ArtistGenre, PlaylistSong } = require('../models');
-const { User } = require('../models');
 const artistData = require('./artist-seeds');
 const artistGenreData = require('./artistsGenres-seeds');
 const artistSongData = require('./artistSong-seeds');
 const songData = require('./songs-seeds');
 const genreData = require('./genre-seeds')
-const userData = require('./userData.json')
-
+const userData = require('./Users.json')
 
 const bulkCreateOptions = {
   individualHooks: true,
