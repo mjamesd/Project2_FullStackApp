@@ -46,4 +46,23 @@ if (req.session.logged_in) {
   session.exit(1);
  });
 
+ // new user sign up
+ const userSignup= {
+
+  username: req.body.username,
+  email: req.body.email,
+  password: req.body.password,
+};
+
+const newuser = new User(userSignup);
+newuser.save(function (err, newuser) {
+  if (err) {
+      console.log(err);
+}
+  req.session.user = newuser;
+  req.session.loggedIn = true;
+  req.session.save();
+
+
 module.exports = router;
+});
