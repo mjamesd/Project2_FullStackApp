@@ -1,77 +1,70 @@
 const router = require('express').Router();
-const { Artist, ArtistSong } = require('../../models');
-const sequelize = require('../../config/connection');
+const { Artist, Song } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', (req, res) => {
-
-    Post.findAll({
-            attributes: [
-                'id',
-                'name'
-            ],
+router.get('/', async (req, res) => {
+    try {
+        const dbArtistData = await Song.findAll({
             order: [
-                ['DESC']
-            ],
-            include: [{
-                    model: Artist,
-                    attributes: ['id', 'artist_id', 'name'],
-                    include: {
-                        model: ArtistSong,
-                        attributes: ['id', 'artist_id', 'song_id']
-                    }
-                },
-                {
-                    model: ArtistSong,
-                    attributes: ['id', 'song_id', 'artist_id']
-                },
-            ]
-        })
-        .then(dbArtistData => {
-            res.json(dbArtistData)
-            console.log('artist data');
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
-
-router.get('/:id', (req, res) => {
-    Post.findOne({
-            where: {
-                id: req.params.id
-            },
-            attributes: [
-                'id',
-                'song_id',
-                'artist_id',
+                ['name', 'ASC']
             ],
             include: [
-
-                {
-                    model: ArtistSong,
-                    attributes: ['id', 'song_id', 'artist_id']
-                },
                 {
                     model: Artist,
-                    attributes: ['id', 'name'],
-                    include: {
-                        model: Artist,
-                        attributes: ['id', 'name', ]
-                    }
-                }
+                },
             ]
-        })
-        .then(dbArtistSong => {
-            if (!dbArtistSong) {
-                res.status(404).json({ message: 'No post found with this id' });
-                return;
-            }
-            res.json(dbArtistSong);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
         });
+        res.json(dbArtistData)
+        console.log('artist data');
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    };
 });
+
+router.get('/:id', async (req, res) => {
+    try {
+        const song = await Song.findOne(
+            {
+                raw: true,
+                include: [
+                    {
+                        model: Artist,
+                    },
+                ],
+            }
+        );
+        res.render('songs-byId', {song});
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
+router.get('/byArtist/:id', async (req, res) => {
+    try {
+        const songs = await Song.findAll(
+            {
+                raw: true,
+                include: [
+                    {
+                        model: Artist,
+                        where: {
+                            'id': req.params.id,
+                        }
+                    },
+                ],
+            }
+        );
+        res.render('songs-byArtist', {songs: songs, artist: songs[0]["artists.name"]});
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
+
+
+
+
+
+
+module.exports = router;

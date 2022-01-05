@@ -1,0 +1,24 @@
+<h2>Edit Artist: {{artist.name}}</h2>
+
+<form class="form edit-form artist">
+  <div class="form-group">
+    <input type="hidden" id="artist-id" value="{{artist.id}}" />
+    <label for="artist-name">Artist Name:</label>
+    <input class="form-input" type="text" id="artist-name" value="{{artist.name}}" />
+  </div>
+  <div class="form-group">
+    <label for="artist-imgur_url">Current Image:</label>
+    <p><span id="displayCurrentImgurUrl"><strong>{{artist.imgur_url}}</strong></span></p>
+    <p><img id="imgur-img" class="image" src="{{artist.imgur_url}}" /></p>
+    <input type="hidden" id="artist-imgur_url" value="{{artist.imgur_url}}" />
+    <label for="artist-img">To change the image, upload a new image:</label>
+    <input class="form-input" type="file" id="artist-img" />
+  </div>
+  <div class="form-group">
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit">Edit Artist</button>
+  </div>
+</form>
+
+<script src="/js/imgur.js"></script>

@@ -1,0 +1,25 @@
+.listing {
+    border-bottom: 2px solid #000;
+}
+
+.hideOnUpload {
+    display: block !important;
+}
+
+.showOnUpload {
+    display: none !important;
+}
+
+div .index {
+    border: 2px solid #000;
+    margin: 5px 0px;
+    padding: 5px;
+}
+
+.image {
+    max-width: 350px;
+}
+
+dt {
+    min-width: 25%;
+}
