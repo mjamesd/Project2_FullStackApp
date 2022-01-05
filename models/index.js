@@ -20,6 +20,9 @@ Genre.belongsToMany(Artist, {through: ArtistGenre});
 Song.belongsToMany(Playlist, {through: PlaylistSong});
 Playlist.belongsToMany(Song, { through: PlaylistSong});
 
+User.hasMany(Playlist);
+Playlist.belongsTo(User);
+
 // Exports
 module.exports = {
   Artist,

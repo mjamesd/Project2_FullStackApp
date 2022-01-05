@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { Artist, ArtistSong } = require('../../models');
-const sequelize = require('../../config/connection');
+const { Artist, Song } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // get route to find Artist songs
@@ -45,7 +44,26 @@ router.get("/:id", (req, res) => {
         .catch((err) => {
             console.log(err);
             res.status(500).json(err);
+
+// router.get('/', async (req, res) => {
+//     try {
+//         const dbArtistData = await Song.findAll({
+//             order: [
+//                 ['name', 'ASC']
+//             ],
+//             include: [
+//                 {
+//                     model: Artist,
+//                 },
+//             ]
+
         });
+        res.json(dbArtistData)
+        console.log('artist data');
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    };
 });
 
 
@@ -107,5 +125,49 @@ router.delete("/:id", (req, res) => {
             res.status(500).json(err);
         });
 });
+
+// router.get('/:id', async (req, res) => {
+//     try {
+//         const song = await Song.findOne(
+//             {
+//                 raw: true,
+//                 include: [
+//                     {
+//                         model: Artist,
+//                     },
+//                 ],
+//             }
+//         );
+//         res.render('songs-byId', {song});
+//     } catch (err) {
+//         res.status(400).json(err);
+//     }
+// });
+
+// router.get('/byArtist/:id', async (req, res) => {
+//     try {
+//         const songs = await Song.findAll(
+//             {
+//                 raw: true,
+//                 include: [
+//                     {
+//                         model: Artist,
+//                         where: {
+//                             'id': req.params.id,
+//                         }
+//                     },
+//                 ],
+//             }
+//         );
+//         res.render('songs-byArtist', {songs: songs, artist: songs[0]["artists.name"]});
+//     } catch (err) {
+//         res.status(400).json(err);
+//     }
+// });
+
+
+
+
+
 
 module.exports = router;

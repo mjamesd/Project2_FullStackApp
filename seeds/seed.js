@@ -7,7 +7,6 @@ const songData = require('./songs-seeds');
 const genreData = require('./genre-seeds')
 const userData = require('./Users.json')
 
-
 const bulkCreateOptions = {
   individualHooks: true,
   returning: true,

@@ -1,0 +1,21 @@
+<h2>New Artist</h2>
+
+<form class="form add-form artist">
+  <div class="form-group">
+    <label for="artist-name">Artist Name:</label>
+    <input class="form-input" type="text" id="artist-name" />
+  </div>
+  <div class="form-group">
+    <label for="artist-img">Upload Image:</label>
+    <input class="form-input" type="file" id="artist-img" />
+  </div>
+  <div class="form-group">
+    <img id="imgur-img" src="#" style="max-width: 350px; display: none;" />
+    <input type="hidden" id="artist-imgur_url" />
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit">Add Artist</button>
+  </div>
+</form>
+
+<script src="/js/imgur.js"></script>
