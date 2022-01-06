@@ -20,19 +20,42 @@ const bulkCreateOptions = {
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  await Artist.bulkCreate(artistData, bulkCreateOptions);
+  for (var i = 0; i < artistData.length; i++) {
+    // console.log('looping!', artistData[i])
+    await Artist.create(artistData[i])
+  }
 
-  await Song.bulkCreate(songData, bulkCreateOptions);
+  // await Artist.bulkCreate(artistData, bulkCreateOptions);
 
-  // await Playlist.bulkCreate(playlistData, bulkCreateOptions);
+  for (var i = 0; i < songData.length; i++) {
+    // console.log('looping!', songData[i])
+    await Song.create(songData[i])
+  }
 
-  await Genre.bulkCreate(genreData, bulkCreateOptions);
+  // await Song.bulkCreate(songData, bulkCreateOptions);
+
+  for (var i = 0; i < genreData.length; i++) {
+    // console.log('looping!', genreData[i])
+    await Genre.create(genreData[i])
+  }
+
+  // await Genre.bulkCreate(genreData, bulkCreateOptions);
 
   // await Search.bulkCreate(searchData, bulkCreateOptions);
 
-  await User.bulkCreate(userData, bulkCreateOptions);
+  for (var i = 0; i < userData.length; i++) {
+    console.log('looping!', userData[i])
+    await User.create(userData[i])
+  }
 
-  await Playlist.bulkCreate(playlistData, bulkCreateOptions);
+  // await User.bulkCreate(userData, bulkCreateOptions);
+
+  for (var i = 0; i < playlistData.length; i++) {
+    // console.log('looping!', playlistData[i])
+    await Playlist.create(playlistData[i])
+  }
+
+  // await Playlist.bulkCreate(playlistData, bulkCreateOptions);
 
   await ArtistSong.bulkCreate(artistSongData, bulkCreateOptions);
 
