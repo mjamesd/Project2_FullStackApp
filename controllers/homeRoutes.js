@@ -5,20 +5,38 @@ const withAuth = require('../utils/auth');
 // Prevent non logged in users from viewing the homepage
 router.get('/', withAuth, async (req, res) => {
   try {
-    const userData = await User.findAll({
-      attributes: { exclude: ['password'] },
-      order: [['name', 'ASC']],
+    const artists = await Artist.findAll(
+      {
+        raw: true,
+        attributes: ["id"],
+      }
+    );
+    const pickOne = Math.floor(Math.random() * artists.length) + 1;
+    const artist = await Artist.findAll({
+      raw: true,
+      where: {
+        id: pickOne,
+      },
+      include: [
+        {
+          model: Song,
+        },
+        {
+          model: Genre
+        }
+      ]
     });
 
-    const users = userData.map((project) => project.get({ plain: true }));
-
     res.render('homepage', {
-      users,
-      // Pass the logged in flag to the template
+      layout: 'main',
+      artist: artist,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status(500)
+      .render('500', { message: err });
+    // res.status(500).json(err);
   }
 });
 
@@ -28,7 +46,7 @@ if (req.session.logged_in) {
     res.redirect('/');
     return;
   }
-
+  // else
   res.render('login');
 });
 
