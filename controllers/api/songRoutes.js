@@ -1,14 +1,12 @@
 const router = require('express').Router();
-const { Artist, Song } = require('../../models');
+const { Artist, Song, ArtistSong } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-
-
 // Prefix of these routes is '/api/songs'
-// GET route for artist
+// GET route for song
 router.get('/', withAuth, async(req, res) => {
     try {
-        const artists = await Song.findAll({
+        const songs = await Song.findAll({
             raw: true,
             order: [
                 ['name', 'ASC'],
@@ -16,7 +14,7 @@ router.get('/', withAuth, async(req, res) => {
         });
         res
             .status(200)
-            .render('Artists/admin/index', { layout: 'admin', artists: artists });
+            .render('Songs/admin/index', { layout: 'admin', songs: songs });
     } catch (err) {
         res
             .status(400)
