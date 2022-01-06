@@ -3,7 +3,7 @@ const { Artist, ArtistGenre, ArtistSong, Genre, Playlist, PlaylistSong, Search, 
 const withAuth = require('../utils/auth');
 
 // Prevent non logged in users from viewing the homepage
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const artists = await Artist.findAll(
       {
@@ -11,25 +11,44 @@ router.get('/', withAuth, async (req, res) => {
         attributes: ["id"],
       }
     );
-    const pickOne = Math.floor(Math.random() * artists.length) + 1;
-    const artist = await Artist.findAll({
+    const randomArtistId = Math.floor(Math.random() * artists.length) + 1;
+    const artist = await Artist.findByPk(randomArtistId, {
       raw: true,
-      where: {
-        id: pickOne,
-      },
+    });
+    const songs = await Song.findAll({
+      raw: true,
       include: [
         {
-          model: Song,
-        },
-        {
-          model: Genre
+          model: Artist,
+          where: {
+            id: randomArtistId
+          }
         }
-      ]
+      ],
     });
+    const genresData = await Genre.findAll({
+      raw: true,
+      include: [
+        {
+          model: Artist,
+          where: {
+            id: randomArtistId
+          }
+        }
+      ],
+    });
+    let _genres = [];
+    for (let i = 0; i < genresData.length; i++) {
+      _genres.push(genresData[i].name)
+    }
+    const genres = _genres.join(', ');
 
+    console.log('-----------LOGGED IN?------>>>>>>', req.session.logged_in);
     res.render('homepage', {
       layout: 'main',
       artist: artist,
+      songs: songs,
+      genres: genres,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

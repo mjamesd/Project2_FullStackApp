@@ -1,12 +1,17 @@
 <h2>Discover a New Musical Artist</h2>
 
-<div class="container artist">
-  <h3>{{artist.[0].name}}</h3>
-  <p><img src="{{artist.[0].imgur_url}}" alt="Image for {{artist.[0].name}}" class="image" /></p>
-  {{#if artist.[1]}}
-  <ul id="artist-songs-{{artist.[0].id}}">
-    {{#each artist as |song|}}
-    <li id="artist-{{artist.[0].id}}-song-{{song.[songs.id]}}"><a href="/songs/{{song.[songs.id]}}">{{song.[songs.name]}}</a></li>
+<div id="artist-{{artist.id}}" class="container artist">
+  <h3>{{artist.name}}</h3>
+  <p class="genres"><em>{{genres}}</em></p>
+  <p><img src="{{artist.imgur_url}}" alt="Image for {{artist.name}}" class="image" /></p>
+  {{#if songs}}
+  <ul id="artist-{{artist.id}}-songs">
+    {{#each songs as |song|}}
+    <li id="artist-{{../artist.id}}-song-{{song.id}}"><a href="/songs/{{song.id}}">{{song.name}}</a>
+    {{#if ../logged_in}}
+      <button class="btn btn-sm btn-info addToPlaylist" data-song-id="{{song.id}}"><span class="material-icons-outlined">playlist_add</span></button>
+    {{/if}}
+    </li>
     {{/each}}
   </ul>
   {{/if}}
