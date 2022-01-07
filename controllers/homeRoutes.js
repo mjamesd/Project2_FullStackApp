@@ -39,7 +39,6 @@ router.get('/', async (req, res) => {
       .render('500', { message: err });
     // res.status(500).json(err);
   }
-});
 
 // LOGIN ROUTE
 router.get('/login', (req, res) => {
@@ -52,5 +51,22 @@ if (req.session.logged_in) {
   res.render('login');
 });
 
+ // new user sign up
+ const userSignup= {
+  username: req.body.username,
+  email: req.body.email,
+  password: req.body.password,
+ };
+
+const newuser = new User(userSignup);
+newuser.save(function (err, newuser) {
+  if (err) {
+      console.log(err);
+}
+  req.session.user = newuser;
+  req.session.loggedIn = true;
+  req.session.save();
+
 
 module.exports = router;
+});
