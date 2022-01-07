@@ -237,5 +237,6 @@ router.put('/edit/:id', withAuth, async (req, res) => {
     }
 
 });
+});
 
 module.exports = router;

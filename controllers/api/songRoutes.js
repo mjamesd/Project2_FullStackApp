@@ -57,10 +57,10 @@ router.get("/:id", (req, res) => {
 //                 },
 //             ]
 
-        });
+       // });
         res.json(dbArtistData)
         console.log('artist data');
-    } catch (err) {
+        } catch (err) {
         console.log(err);
         res.status(500).json(err);
     };

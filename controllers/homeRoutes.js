@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const session = require('express-session');
 const { Artist, ArtistGenre, ArtistSong, Genre, Playlist, PlaylistSong, Search, Song, User } = require('../models');
 const withAuth = require('../utils/auth');
 
@@ -28,23 +29,13 @@ router.get('/', withAuth, async (req, res) => {
 router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
 if (req.session.logged_in) {
-    res.redirect('/homepage');
+    res.redirect('/');
     return;
   }
 
   res.render('login');
 });
-// User log out
-(async () => {
-  const wasLoggedIn = await new Authenticator().logout();
-  if (wasLoggedIn) {
-   User.success('Logout successful');
-  }
-  session.exit(0);
- })().catch(async (error) => {
-  User.error(error);
-  session.exit(1);
- });
+
 
  // new user sign up
  const userSignup= {
