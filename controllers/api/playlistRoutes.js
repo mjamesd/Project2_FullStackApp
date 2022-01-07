@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
 
       // res.status(200).json(playlists)
       // console.log(playlists)
-      res.status(200).render('Playlists/index', {playlists: playlists})
+      res.status(200).render('Playlists/index', {playlists: playlists, logged_in: req.session.logged_in})
     }
     catch (err) {
       res.status(500).json(err)
@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
         return song.get({plain: true});
         })
         // res.status(200).json(singlePlaylist)
-        res.status(200).render('Playlists/view', {playlist: playlist[0]})
+        res.status(200).render('Playlists/view', {playlist: playlist[0], logged_in: req.session.logged_in})
     }
     catch (err) {
       res.status(500).json(err)
