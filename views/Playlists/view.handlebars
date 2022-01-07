@@ -1,0 +1,13 @@
+<h2>{{playlist.name}}</h2>
+
+<p>{{playlist.description}}</p>
+
+<ul id="playlist-songs-{{playlist.name}}">
+    {{#each playlist.songs as |song|}}
+        <li><a href="/songs/{{song.id}}">Song Title: {{song.name}}</a></li>
+        {{#each song.artists as |artist|}}
+            <li><a href="/artists/{{artist.id}}">Artist: {{artist.name}}</a></li>
+            <br>
+        {{/each}}
+    {{/each}}
+</ul>

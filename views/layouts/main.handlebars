@@ -7,29 +7,28 @@
   <title>Playlist Creator Online</title>
   <link rel="stylesheet" href="/css/jass.css">
   <link rel="stylesheet" href="/css/playlistcreator.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
 </head>
 
 <body>
   <header class="display-flex justify-space-between align-center p-2">
-    <h1>
-      Playlist Creator Online
-    </h1>
-    <!-- Only display the logout button if the user is logged in -->
-    {{#if logged_in}}
+    <h1>Melody Medley</h1>
     <nav>
+    {{#if logged_in}}
       <button class="btn" id="logout">logout</button>
-    </nav>
+    {{else}}
+      <a class="btn" id="login" href="/login">login</a>
     {{/if}}
+    </nav>
   </header>
   <main class="container container-fluid mt-5">
     {{{ body }}}
     
   </main>
   <footer>
-      
+      &copy; 2022 Music Medley Dev Team
   </footer>
 
-  <!-- Only include the logout script if the user is logged in -->
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   {{/if}}

@@ -23,3 +23,7 @@ div .index {
 dt {
     min-width: 25%;
 }
+
+a.btn:hover {
+    text-decoration: none;
+}
