@@ -1,9 +1,12 @@
 const router = require('express').Router();
+const session = require('express-session');
 const { Artist, ArtistGenre, ArtistSong, Genre, Playlist, PlaylistSong, Search, Song, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Prevent non logged in users from viewing the homepage
-router.get('/', async (req, res) => {
+
+router.get('/', withAuth, async (req, res) => {
+  if (session['logged_in']==true){
   try {
     let artists = await Artist.findAll(
       {
@@ -75,8 +78,9 @@ router.get('/', async (req, res) => {
       .render('500', { message: err });
     // res.status(500).json(err);
   }
-});
 
+}else(res.redirect['/login'])
+});
 router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
 if (req.session.logged_in) {
@@ -88,4 +92,23 @@ if (req.session.logged_in) {
 });
 
 
+ // new user sign up
+ const userSignup= {
+
+  username: req.body.username,
+  email: req.body.email,
+  password: req.body.password,
+};
+
+const newuser = new User(userSignup);
+newuser.save(function (err, newuser) {
+  if (err) {
+      console.log(err);
+}
+  req.session.user = newuser;
+  req.session.loggedIn = true;
+  req.session.save();
+
+
 module.exports = router;
+});
