@@ -8,6 +8,9 @@
         <p>{{playlist.description}}</p>
         {{#each playlist.songs as |song| }}
            <p><a href="/songs/{{song.id}} ">Song Title: {{song.name}}</a><br>
+           {{#if ../logged_in}}
+                <button class="btn btn-sm btn-info addToPlaylist" data-song-id="{{song.id}}"><span class="material-icons-outlined">playlist_add</span></button>
+           {{/if}}
            {{#each song.artists as |artist|}} 
             <a href="/artists/{{artist.id}}">Artist: {{artist.name}}, </a>
            {{/each}}</p>
