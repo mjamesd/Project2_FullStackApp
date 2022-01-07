@@ -29,8 +29,10 @@ router.get('/search/:term', async (req, res) => {
         const results = await Artist.findAll({
             raw: true,
             where: {
-                name: req.params.term
-            }
+                name: {
+                    [Op.like]: `%${req.params.term}%`,
+                },
+            },
         });
         res
             .status(200)

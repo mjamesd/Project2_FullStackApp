@@ -5,12 +5,30 @@ const withAuth = require('../utils/auth');
 // Prevent non logged in users from viewing the homepage
 router.get('/', async (req, res) => {
   try {
-    const artists = await Artist.findAll(
+    let artists = await Artist.findAll(
       {
         raw: true,
         attributes: ["id"],
       }
     );
+      
+    for (let i = 0; i < artists.length; i++) {
+      artists[i] = artists[i];
+      let songs = await Song.findAll({
+        raw: true,
+        include: [
+          {
+            model: Artist,
+            where: {
+              id: artists[i].id,
+            }
+          }
+        ]
+      });
+      artists[i].songs = songs;
+      
+    }
+    console.log('-------------------ARTISTS------------------>', artists[2]);
     const randomArtistId = Math.floor(Math.random() * artists.length) + 1;
     const artist = await Artist.findByPk(randomArtistId, {
       raw: true,
