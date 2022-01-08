@@ -1,16 +1,19 @@
 <h2>{{playlist.name}}</h2>
-
 <p>{{playlist.description}}</p>
 
 <ul id="playlist-songs-{{playlist.name}}">
     {{#each playlist.songs as |song|}}
-        <li><a href="/songs/{{song.id}}">Song Title: {{song.name}}</a></li>
-         {{#if ../logged_in}}
-            <button class="btn btn-sm btn-info addToPlaylist" data-song-id="{{song.id}}"><span class="material-icons-outlined">playlist_add</span></button>
-         {{/if}}
-        {{#each song.artists as |artist|}}
-            <li><a href="/artists/{{artist.id}}">Artist: {{artist.name}}</a></li>
-            <br>
-        {{/each}}
+    <li>
+        {{#if ../logged_in}}
+            <a class="btn btn-sm btn-info" href="/playlists/addSong/{{song.id}}"><span
+                class="material-icons-outlined">playlist_add</span></a>
+        {{/if}}
+        {{#if ../isMine}}
+            <a class="btn btn-sm btn-danger" href="/playlists/removeSong/{{../playlist.id}}/{{song.id}}"><span
+                class="material-icons-outlined">playlist_remove</span></a>
+        {{/if}}
+        <a href="/songs/{{song.id}}">{{song.name}}</a> by <a
+            href="/artists/{{song.artists.[0].id}}">{{song.artists.[0].name}}</a>
+    </li>
     {{/each}}
 </ul>

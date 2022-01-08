@@ -15,7 +15,12 @@
   <header class="display-flex justify-space-between align-center p-2">
     <h1>Melody Medley</h1>
     <nav>
+      <a class="btn btn-black" href="/playlists/">playlists</a>
+      <a class="btn btn-black" href="/artists/">artists</a>
+      <a class="btn btn-black" href="/songs/">songs</a>
+      <a class="btn btn-black" href="/genres/">genres</a>
     {{#if logged_in}}
+      <a class="btn btn-info" href="/mine">my playlists</a>
       <button class="btn" id="logout">logout</button>
     {{else}}
       <a class="btn" id="login" href="/login">login</a>

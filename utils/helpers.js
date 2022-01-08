@@ -7,4 +7,10 @@ module.exports = {
     genreString = genreString.substring(0, genreString.length - 2);
     return genreString;
   },
+  ifOr: (var1, var2) => {
+    if (var1 || var2) {
+      return true;
+    }
+    return false;
+  },
 };

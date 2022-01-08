@@ -1,39 +1,52 @@
 const router = require('express').Router();
-const { Playlist, PlaylistSong, Song, Genre, ArtistGenre, ArtistSong, Artist} = require('../models');
-const withAuth = require('../utils/auth');
+const { Playlist, PlaylistSong, Song, Genre, ArtistGenre, ArtistSong, Artist } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 
 router.get('/', async (req, res) => {
-    // find all categories
-    // be sure to include its associated Products
-    try {
-      const userPlaylists = await Playlist.findAll(
-        {
-          where: {
-              user_id: req.session.user_id
-          }
+  try {
+    const userPlaylists = await Playlist.findAll(
+      {
+        where: {
+          user_id: req.session.user_id
         }
-      )
-      res.status(200).json(userPlaylists)
-    }
-    catch (err) {
-      res.status(500).json(err)
-    }
-    
-  });
+      }
+    )
+    res.status(200).json(userPlaylists)
+  }
+  catch (err) {
+    res.status(500).json(err)
+  }
+
+});
+
+router.post('/add', async (req, res) => {
+  try {
+    const playlist = await Playlist.create(req.body);
+    res
+      .status(200)
+      .json({ ok: playlist });
+  } catch (err) {
+    res
+      .status(500)
+      .json(err)
+  }
+});
+
+router.post('/addSong', async (req, res) => {
+  try {
+    const playlistSongData = await PlaylistSong.create(req.body);
+    res
+      .status(200)
+      .json({ ok: playlistSongData })
+  }
+  catch (err) {
+    res
+      .status(500)
+      .json(err)
+  }
+});
 
 
-router.put('/addsong/:songID/:playlistID', async (req, res) => {
-    // update a category by its `id` value
-    try {
-      const addSongData = await PlaylistSong.create(req.body)
-      res.status(200).json(addSongData)
-    }
-    catch (err) {
-      res.status(500).json(err)
-    }
-  });
 
-
-
-  module.exports = router;
+module.exports = router;
