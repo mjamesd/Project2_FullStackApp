@@ -8,7 +8,7 @@ router.get('/add', withAuth, (req, res) => {
         .render('Genres/add');
 });
 
-router.get('/view', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const genres = await Genre.findAll({
             raw: true,
@@ -31,7 +31,7 @@ router.get('/view', async (req, res) => {
     }
 });
 
-router.get('/view/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const genre = await Genre.findByPk(req.params.id, {
             raw: true,
