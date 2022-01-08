@@ -4,15 +4,18 @@ body {
 
 header {
     background-color: #ff7f50;
+    padding: 1rem;
 }
 
 footer {
     background-color: #ff7f50;
     text-align: center;
+    padding: 1rem;
 }
 
 .container {
     background-color: #f5f5dc;
+    padding: 1rem;
 }
 
 .listing {
@@ -51,4 +54,9 @@ ul.songs-list {
 
 a.addToPlaylist {
     margin-bottom: 5px !important;
+}
+
+form select {
+    padding: 0.5rem 1.5rem;
+    line-height: 1.5;
 }

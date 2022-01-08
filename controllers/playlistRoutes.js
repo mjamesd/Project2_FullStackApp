@@ -54,9 +54,17 @@ router.get('/addSong/:song_id', withAuth, async (req, res) => {
       user_id: req.session.user_id
     }
   });
+  const songsData = await Song.findAll({
+    where: {
+      id: req.params.song_id
+    },
+    include: [ Artist ]
+  });
+  const songs = songsData.map(i => i.get({ plain: true }));
+  const song = songs[0];
   res
     .status(200)
-    .render('Playlists/addSong', { song_id: req.params.song_id, playlists: playlists, logged_in: req.session.logged_in });
+    .render('Playlists/addSong', { song: song, playlists: playlists, logged_in: req.session.logged_in });
 });
 
 router.post('/', async (req, res) => {

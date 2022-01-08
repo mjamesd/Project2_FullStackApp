@@ -4,8 +4,6 @@ const withAuth = require('../../utils/auth');
 
 
 router.get('/', async (req, res) => {
-    // find all categories
-    // be sure to include its associated Products
     try {
       const userPlaylists = await Playlist.findAll(
         {
@@ -25,6 +23,7 @@ router.get('/', async (req, res) => {
 
 router.post('/addSong', async (req, res) => {
     // update a category by its `id` value
+    console.log('--------------ADD SONG------------------->', req.body);
     try {
       const playlistSongData = await PlaylistSong.create(req.body);
       res
