@@ -29,7 +29,6 @@ router.get('/', async (req, res) => {
     res
       .status(200)
       .render('homepage', {
-        layout: 'main',
         artist: artist,
         logged_in: req.session.logged_in,
       });
@@ -38,6 +37,26 @@ router.get('/', async (req, res) => {
       .status(500)
       .render('500', { message: err });
     // res.status(500).json(err);
+  }
+});
+
+router.get('/mine', withAuth, async (req, res) => {
+  try {
+    const playlistData = await Playlist.findAll(
+      {
+        where: {
+          user_id: req.session.user_id
+        },
+        include: [{ model: User, },{ model: Song, include: [{ model: Artist }] }]
+      }
+    )
+    let playlists = playlistData.map((playlist) => {
+      return playlist.get({ plain: true });
+    })
+    res.status(200).render('Playlists/index', { playlists: playlists, logged_in: req.session.logged_in, isMine: true })
+  }
+  catch (err) {
+    res.status(500).json(err)
   }
 });
 

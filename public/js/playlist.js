@@ -1,3 +1,5 @@
+const req = require("express/lib/request");
+
 // handles adding a song to a playlist from a button on the front end
 const addSongToPlaylist = async (e) => {
     e.preventDefault();
@@ -7,7 +9,7 @@ const addSongToPlaylist = async (e) => {
         playlist_id: playlist_id,
         song_id: song_id,
     };
-    const addSongUrl = `/api/playlists/addSong/`;
+    const addSongUrl = `/api/playlists/addSong`;
     const response = await fetch(addSongUrl, {
         method: `POST`,
         headers: { 'Content-Type': `application/json` },
@@ -17,11 +19,31 @@ const addSongToPlaylist = async (e) => {
     if (response.ok) {
         document.location.replace(`/playlists/${playlist_id}`);
     } else {
-        alert(`Failed to add new record. Check the logs!`);
+        alert(`Failed to add new record. Cannot have the same song twice.`);
+    }
+};
+
+// handles creating a new playlist
+const handleAddPlaylist = async (e) => {
+    e.preventDefault();
+    const body = {
+        name: document.getElementById(`playlist-name`).value,
+        description: document.getElementById(`playlist-description`).value,
+        user_id: document.getElementById(`playlist-user_id`).value,
+        isPublic: document.getElementById(`playlist-isPublic`).checked,
+    };
+    const url = `/api/playlists/add`;
+    const response = fetch(url, {
+        method: `POST`,
+        headers: { 'Content-Type': `application/json` },
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        document.location.replace(``);
+    } else {
+        alert(`Failed to add new record. Try again!`);
     }
 };
 
 document.getElementById(`addSongToPlaylist`).addEventListener(`submit`, addSongToPlaylist);
-
-// handles removing a song to a playlist from a button on the front end
-
+document.getElementById(`addPlaylist`).addEventListener(`submit`, handleAddPlaylist);

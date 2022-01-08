@@ -1,20 +1,18 @@
 const router = require('express').Router();
-const { Playlist, PlaylistSong, Song, Genre, ArtistGenre, ArtistSong, Artist } = require('../models');
+const { Playlist, PlaylistSong, Song, Genre, ArtistGenre, ArtistSong, Artist, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
-  // find all categories
-  // be sure to include its associated Products
   try {
     const playlistData = await Playlist.findAll(
       {
-        include: [{ model: Song, include: [{ model: Artist }] }]
+        include: [{ model: User, }, { model: Song, include: [{ model: Artist }] }]
       }
     )
-    const playlists = playlistData.map((playlist) => {
+    let playlists = playlistData.map((playlist) => {
       return playlist.get({ plain: true });
     })
-    res.status(200).render('Playlists/index', { playlists: playlists, logged_in: req.session.logged_in })
+    res.status(200).render('Playlists/index', { playlists, logged_in: req.session.logged_in })
   }
   catch (err) {
     res.status(500).json(err)
@@ -23,8 +21,6 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
   try {
     const singlePlaylist = await Playlist.findAll(
       {
@@ -33,50 +29,79 @@ router.get('/:id', async (req, res) => {
         },
         include: [{ model: Song, include: [{ model: Artist }] }]
       })
-    const playlist = singlePlaylist.map((song) => {
-      return song.get({ plain: true });
-    })
-    // res.status(200).json(singlePlaylist)
-    res.status(200).render('Playlists/view', { playlist: playlist[0], logged_in: req.session.logged_in })
+    const playlist = singlePlaylist.map((song) => song.get({ plain: true }));
+    const isMine = (playlist[0].user_id == req.session.user_id) ? true : false;
+    res
+      .status(200)
+      .render('Playlists/view', { playlist: playlist[0], logged_in: req.session.logged_in, isMine: isMine });
   }
   catch (err) {
     res.status(500).json(err)
   }
-
 });
 
-
-// ADD A SONG TO A PLAYLIST
+// Display add a Song to a Playlist form
 router.get('/addSong/:song_id', withAuth, async (req, res) => {
-  const playlists = await Playlist.findAll({
-    raw: true,
-    where: {
-      user_id: req.session.user_id
-    }
-  });
-  const songsData = await Song.findAll({
-    where: {
-      id: req.params.song_id
-    },
-    include: [ Artist ]
-  });
-  const songs = songsData.map(i => i.get({ plain: true }));
-  const song = songs[0];
-  res
-    .status(200)
-    .render('Playlists/addSong', { song: song, playlists: playlists, logged_in: req.session.logged_in });
+  try {
+    const playlists = await Playlist.findAll({
+      raw: true,
+      where: {
+        user_id: req.session.user_id
+      }
+    });
+    const songsData = await Song.findAll({
+      where: {
+        id: req.params.song_id
+      },
+      include: [Artist]
+    });
+    const songs = songsData.map(i => i.get({ plain: true }));
+    const song = songs[0];
+    res
+      .status(200)
+      .render('Playlists/addSong', { song: song, playlists: playlists, logged_in: req.session.logged_in });
+  } catch (err) {
+    res
+      .status(500)
+      .json(err)
+  }
 });
 
-router.post('/', async (req, res) => {
-  // create a new category
+router.get('/removeSong/:playlist_id/:song_id', withAuth, async (req, res) => {
   try {
-    const newPlaylistData = await Playlist.create(req.body)
-    res.status(200).json(newPlaylistData)
-  }
-  catch (err) {
-    res.status(400).json(err)
+    await PlaylistSong.destroy({
+      where: {
+        playlist_id: req.params.playlist_id,
+        song_id: req.params.song_id
+      }
+    });
+    req.session.message = 'Song sucessfully removed from this playlist.';
+    res.redirect(`/playlists/${req.params.playlist_id}`);
+  } catch (err) {
+    res
+      .status(500)
+      .json(err)
   }
 });
+
+// Display create Playlist form
+router.get('/add', (req, res) => {
+  console.log('----------------------SOMETHING-------------------');
+  res
+    // .status(200)
+    .render('Playlists/add', { logged_in: req.session.logged_in });
+});
+
+// router.post('/', async (req, res) => {
+//   // create a new category
+//   try {
+//     const newPlaylistData = await Playlist.create(req.body)
+//     res.status(200).json(newPlaylistData)
+//   }
+//   catch (err) {
+//     res.status(400).json(err)
+//   }
+// });
 
 router.post('/addsong', async (req, res) => {
   // create a new category

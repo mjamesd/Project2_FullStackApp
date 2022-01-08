@@ -52,7 +52,7 @@ ul.songs-list {
     list-style-type: none;
 }
 
-a.addToPlaylist {
+a.btn {
     margin-bottom: 5px !important;
 }
 
