@@ -4,11 +4,12 @@
     {{#each playlists as |playlist|}}
     
     <div id="playlist-{{playlist.name}}" class="playlists index">
-        <a href="/api/playlists/{{playlist.id}}"><h3>{{playlist.name}}</h3></a>
+        <a href="/playlists/{{playlist.id}}"><h3>{{playlist.name}}</h3></a>
         <p>{{playlist.description}}</p>
         {{#each playlist.songs as |song| }}
            <p><a href="/songs/{{song.id}} ">Song Title: {{song.name}}</a><br>
-           {{#if ../logged_in}}
+           {{#if ../../logged_in}}
+           <!-- use ../../ to double escape the loops -->
                 <button class="btn btn-sm btn-info addToPlaylist" data-song-id="{{song.id}}"><span class="material-icons-outlined">playlist_add</span></button>
            {{/if}}
            {{#each song.artists as |artist|}} 
