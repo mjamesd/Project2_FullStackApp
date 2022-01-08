@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { Playlist, PlaylistSong, Song, Genre, ArtistGenre, ArtistSong, Artist} = require('../models');
-const withAuth = require('../utils/auth');
+const { Playlist, PlaylistSong, Song, Genre, ArtistGenre, ArtistSong, Artist} = require('../../models');
+const withAuth = require('../../utils/auth');
 
 
 router.get('/', async (req, res) => {
@@ -23,14 +23,18 @@ router.get('/', async (req, res) => {
   });
 
 
-router.put('/addsong/:songID/:playlistID', async (req, res) => {
+router.post('/addSong', async (req, res) => {
     // update a category by its `id` value
     try {
-      const addSongData = await PlaylistSong.create(req.body)
-      res.status(200).json(addSongData)
+      const playlistSongData = await PlaylistSong.create(req.body);
+      res
+        .status(200)
+        .json({ ok: playlistSongData })
     }
     catch (err) {
-      res.status(500).json(err)
+      res
+        .status(500)
+        .json(err)
     }
   });
 

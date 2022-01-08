@@ -1,0 +1,13 @@
+<h2>Add Song to Playlist</h2>
+
+<form id="addSongToPlaylist">
+    <input type="hidden" id="song_id" value="{{song_id}}" />
+    <select id="playlist_id">
+        {{#each playlists as |playlist|}}
+            <option id="{{playlist.id}}">{{playlist.name}}</option>
+        {{/each}}
+    </select>
+    <button class="btn">Add song to playlist</button>
+</form>
+
+<script src="/js/playlist.js"></script>
