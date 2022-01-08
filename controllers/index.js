@@ -8,6 +8,7 @@ const songPublicRoutes = require('./songPublicRoutes');
 const genreRoutes = require('./genreRoutes')
 const playlistRoutes = require('./playlistRoutes')
 
+
 // Prefix of these routes is ~ (nothing)
 
 router.use('/', homeRoutes);
