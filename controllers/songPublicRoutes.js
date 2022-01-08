@@ -6,23 +6,21 @@ const withAuth = require('../utils/auth');
 // Prefix of these routes is '/songs'
 
 // GET-ALL songs
-router.get('/', async (req, res) => {
+router.get('/', async(req, res) => {
     try {
         const songsData = await Song.findAll({
             order: [
                 ['name', 'ASC'],
             ],
-            include: [
-                {
-                    model: Artist,
-                    include: [ Genre ]
-                }
-            ]
+            include: [{
+                model: Artist,
+                include: [Genre]
+            }]
         });
         const songs = songsData.map((i) => i.get({ plain: true }));
         res
             .status(200)
-            .render('Songs/index', { songs: songs });
+            .render('Songs/index', { songs: songs, logged_in: req.session.logged_in });
     } catch (err) {
         res
             .status(400)
@@ -31,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET-ONE song
-router.get('/:id', async (req, res) => {
+router.get('/:id', async(req, res) => {
     try {
         const songData = await Song.findAll({
             where: {
@@ -39,14 +37,14 @@ router.get('/:id', async (req, res) => {
             },
             include: [{
                 model: Artist,
-                include: [ Genre ]
+                include: [Genre]
             }]
         });
         let song = songData.map((i) => i.get({ plain: true }));
         song = song[0];
         res
             .status(200)
-            .render('Songs/view', { song: song });
+            .render('Songs/view', { song: song, logged_in: req.session.logged_in });
     } catch (err) {
         res
             .status(500)
@@ -70,7 +68,7 @@ router.get('/edit/:id', withAuth, async(req, res) => {
             },
             include: [{
                 model: Artist,
-                include: [ Genre ]
+                include: [Genre]
             }]
         });
         let song = songData.map((i) => i.get({ plain: true }));
