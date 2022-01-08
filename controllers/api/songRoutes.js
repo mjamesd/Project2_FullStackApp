@@ -1,36 +1,30 @@
 const router = require('express').Router();
-const { Artist, Song, ArtistSong } = require('../../models');
+const { QueryTypes } = require('sequelize');
+const { Song } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Prefix of these routes is '/api/songs'
-// GET route for song
-router.get('/', withAuth, async(req, res) => {
-    try {
-        const songs = await Song.findAll({
-            raw: true,
-            order: [
-                ['name', 'ASC'],
-            ]
-        });
-        res
-            .status(200)
-            .render('Songs/admin/index', { layout: 'admin', songs: songs });
-    } catch (err) {
-        res
-            .status(400)
-            .json(err);
-    }
-});
 
-// for search
-router.get('/search/:term', async(req, res) => {
+// Search for a Song
+router.get('/search/:term', async (req, res) => {
     try {
-        const results = await Song.findAll({
-            raw: true,
-            where: {
-                name: req.params.term
+        // from https://stackoverflow.com/a/3339041/4249622
+        const resultsData = await sequelize.query(
+            `SELECT 
+                id, name, 
+                LEVENSHTEIN(name, '${req.params.term}') AS distance
+            FROM song 
+            WHERE 
+                name LIKE "%${req.params.term}%"
+            ORDER BY
+                distance
+                DESC`,
+            {
+                nest: true,
+                type: QueryTypes.SELECT
             }
-        });
+        );
+        const results = JSON.stringify(resultsData[0], null, 2);
         res
             .status(200)
             .json(results);
@@ -40,29 +34,6 @@ router.get('/search/:term', async(req, res) => {
             .json(err);
     }
 });
-
-// View All of the songs
-router.get('/view/:id', withAuth, async(req, res) => {
-    try {
-        const song = await Song.findAll({
-            raw: true,
-            where: {
-                id: req.params.id
-            },
-            include: [{
-                model: Artist,
-            }]
-        });
-        res
-            .status(200)
-            .render('Artists/admin/view', { layout: 'admin', song: song });
-    } catch (err) {
-        res
-            .status(500)
-            .json(err);
-    }
-});
-
 
 // Create a new song
 router.post('/add', withAuth, async(req, res) => {
@@ -79,13 +50,17 @@ router.post('/add', withAuth, async(req, res) => {
     }
 });
 
-// Display edit Song page
-router.get('/edit/:id', withAuth, async(req, res) => {
+// Edit a song
+router.put('/edit/:id', withAuth, async (req, res) => {
     try {
-        const song = await Song.findByPk(req.params.id, { raw: true });
+        const songData = await Song.update(req.body, { // raw: true ???
+            where: {
+                id: req.params.id
+            }
+        });
         res
             .status(200)
-            .render('Artists/admin/edit', { layout: 'admin', song: song });
+            .json(songData)
     } catch (err) {
         res
             .status(500)
@@ -94,18 +69,18 @@ router.get('/edit/:id', withAuth, async(req, res) => {
 });
 
 
-router.delete("/:id", withAuth, async(req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
     try {
-        const deletedSong = await Song.destroy(req.params.id, { raw: true });
+        const songData = await Song.destroy(req.params.id); // raw: true ???
         res
             .status(200)
-            .json(deletedSong)
+            .json(songData)
     } catch (err) {
         res
-            .status(500).json(err)
-
-
+            .status(500)
+            .json(err)
     }
 })
+
 
 module.exports = router
