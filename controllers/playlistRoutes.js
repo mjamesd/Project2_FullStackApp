@@ -20,26 +20,6 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/:id', async (req, res) => {
-  try {
-    const singlePlaylist = await Playlist.findAll(
-      {
-        where: {
-          'id': req.params.id
-        },
-        include: [{ model: Song, include: [{ model: Artist }] }]
-      })
-    const playlist = singlePlaylist.map((song) => song.get({ plain: true }));
-    const isMine = (playlist[0].user_id == req.session.user_id) ? true : false;
-    res
-      .status(200)
-      .render('Playlists/view', { playlist: playlist[0], logged_in: req.session.logged_in, isMine: isMine });
-  }
-  catch (err) {
-    res.status(500).json(err)
-  }
-});
-
 // Display add a Song to a Playlist form
 router.get('/addSong/:song_id', withAuth, async (req, res) => {
   try {
@@ -86,35 +66,10 @@ router.get('/removeSong/:playlist_id/:song_id', withAuth, async (req, res) => {
 
 // Display create Playlist form
 router.get('/add', (req, res) => {
-  console.log('----------------------SOMETHING-------------------');
   res
     // .status(200)
-    .render('Playlists/add', { logged_in: req.session.logged_in });
+    .render('Playlists/add', { logged_in: req.session.logged_in, user_id: req.session.user_id });
 });
-
-// router.post('/', async (req, res) => {
-//   // create a new category
-//   try {
-//     const newPlaylistData = await Playlist.create(req.body)
-//     res.status(200).json(newPlaylistData)
-//   }
-//   catch (err) {
-//     res.status(400).json(err)
-//   }
-// });
-
-router.post('/addsong', async (req, res) => {
-  // create a new category
-  try {
-    const addSongData = await PlaylistSong.create(req.body)
-    res.status(200).json(addSongData)
-  }
-  catch (err) {
-    res.status(400).json(err)
-  }
-});
-
-
 
 router.put('/:id', async (req, res) => {
   // update a category by its `id` value
@@ -125,6 +80,26 @@ router.put('/:id', async (req, res) => {
       }
     })
     res.status(200).json(updatePlaylistData)
+  }
+  catch (err) {
+    res.status(500).json(err)
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const singlePlaylist = await Playlist.findAll(
+      {
+        where: {
+          'id': req.params.id
+        },
+        include: [{ model: Song, include: [{ model: Artist }] }]
+      })
+    const playlist = singlePlaylist.map((song) => song.get({ plain: true }));
+    const isMine = (playlist[0].user_id == req.session.user_id) ? true : false;
+    res
+      .status(200)
+      .render('Playlists/view', { playlist: playlist[0], logged_in: req.session.logged_in, isMine: isMine });
   }
   catch (err) {
     res.status(500).json(err)
