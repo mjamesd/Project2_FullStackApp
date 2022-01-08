@@ -1,3 +1,20 @@
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/background.jpg")no-repeat center center fixed;
+}
+
+header {
+    background-color: #ff7f50;
+}
+
+footer {
+    background-color: #ff7f50;
+    text-align: center;
+}
+
+.container {
+    background-color: #f5f5dc;
+}
+
 .listing {
     border-bottom: 2px solid #000;
 }
@@ -26,4 +43,12 @@ dt {
 
 a.btn:hover {
     text-decoration: none;
+}
+
+ul.songs-list {
+    list-style-type: none;
+}
+
+a.addToPlaylist {
+    margin-bottom: 5px !important;
 }

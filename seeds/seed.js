@@ -63,6 +63,13 @@ const seedDatabase = async () => {
 
   await PlaylistSong.bulkCreate(playlistSongData, bulkCreateOptions);
 
+  console.log('===================================================================');
+  console.log('||                                                               ||');
+  console.log('||          YOU MUST RUN THE "CREATE FUNCTION" QUERIES IN        ||');
+  console.log('||          ~/db/functions.sql                                   ||');
+  console.log('||                                                               ||');
+  console.log('===================================================================');
+
   process.exit(0);
 };
 

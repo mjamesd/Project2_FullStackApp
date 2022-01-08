@@ -1,12 +1,9 @@
 const router = require('express').Router();
-const session = require('express-session');
 const { Artist, ArtistGenre, ArtistSong, Genre, Playlist, PlaylistSong, Search, Song, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-// Prevent non logged in users from viewing the homepage
-
-router.get('/', withAuth, async (req, res) => {
-  if (session['logged_in']==true){
+// HOMEPAGE ROUTE
+router.get('/', async (req, res) => {
   try {
     let artists = await Artist.findAll(
       {
@@ -14,62 +11,26 @@ router.get('/', withAuth, async (req, res) => {
         attributes: ["id"],
       }
     );
-      
-    for (let i = 0; i < artists.length; i++) {
-      artists[i] = artists[i];
-      let songs = await Song.findAll({
-        raw: true,
-        include: [
-          {
-            model: Artist,
-            where: {
-              id: artists[i].id,
-            }
-          }
-        ]
-      });
-      artists[i].songs = songs;
-      
-    }
-    console.log('-------------------ARTISTS------------------>', artists[2]);
-    const randomArtistId = Math.floor(Math.random() * artists.length) + 1;
-    const artist = await Artist.findByPk(randomArtistId, {
-      raw: true,
+    const randomArtistId = artists[Math.floor(Math.random()*artists.length)].id;
+    const artistData = await Artist.findAll({
+      where: {
+        id: randomArtistId
+      },
+      limit: 1,
+      include: [Song, Genre]
     });
-    const songs = await Song.findAll({
-      raw: true,
-      include: [
-        {
-          model: Artist,
-          where: {
-            id: randomArtistId
-          }
-        }
-      ],
+    let artist = artistData.map((i) => {
+      return i.get({ plain: true })
     });
-    const genresData = await Genre.findAll({
-      raw: true,
-      include: [
-        {
-          model: Artist,
-          where: {
-            id: randomArtistId
-          }
-        }
-      ],
-    });
-    let _genres = [];
-    for (let i = 0; i < genresData.length; i++) {
-      _genres.push(genresData[i].name)
-    }
-    const genres = _genres.join(', ');
+    artist = artist[0]; // there is only one, but we need to use findAll so that we can use .map & .get
 
     console.log('-----------LOGGED IN?------>>>>>>', req.session.logged_in);
-    res.render('homepage', {
+
+    res
+      .status(200)
+      .render('homepage', {
       layout: 'main',
       artist: artist,
-      songs: songs,
-      genres: genres,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -79,8 +40,7 @@ router.get('/', withAuth, async (req, res) => {
     // res.status(500).json(err);
   }
 
-}else(res.redirect['/login'])
-});
+// LOGIN ROUTE
 router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
 if (req.session.logged_in) {
@@ -91,14 +51,12 @@ if (req.session.logged_in) {
   res.render('login');
 });
 
-
  // new user sign up
  const userSignup= {
-
   username: req.body.username,
   email: req.body.email,
   password: req.body.password,
-};
+ };
 
 const newuser = new User(userSignup);
 newuser.save(function (err, newuser) {
