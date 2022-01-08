@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { Artist, Song, Genre } = require('../models');
-const { sequelize } = require('../models/Artist');
 const withAuth = require('../utils/auth');
 
 // Prefix of these routes is '/songs'

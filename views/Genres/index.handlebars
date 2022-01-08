@@ -1,0 +1,28 @@
+<h2>Genres</h2>
+
+<div class="container">
+    {{#each genres as |genre|}}
+    <div id="genre-{{genre.id}}" class="genres index">
+        <h3><a href="/genres/{{genre.id}}">{{genre.name}}</a></h3>
+        <ul id="genre-{{genre.id}}">
+        {{#each genre.artists as |artist| }}
+            <li>
+                <a href="/artists/{{artist.id}}">{{artist.name}}</a>
+                <ul id="artist-{{artist.id}}-songs" class="songs-list">
+                {{#each artist.songs as |song|}}
+                    <li>
+                    {{#if ../../../logged_in}}
+                        <a class="btn btn-sm btn-info" href="/playlists/addSong/{{song.id}}"><span
+                            class="material-icons-outlined">playlist_add</span></a>
+                    {{/if}}
+                    <a href="/songs/{{song.id}}">{{song.name}}</a> by <a
+                        href="/artists/{{artist.id}}">{{artist.name}}</a>
+                    </li>
+                {{/each}}
+                </ul>
+            </li>
+        {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>
