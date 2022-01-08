@@ -65,7 +65,7 @@ router.get('/removeSong/:playlist_id/:song_id', withAuth, async (req, res) => {
 });
 
 // Display create Playlist form
-router.get('/add', (req, res) => {
+router.get('/add', withAuth, (req, res) => {
   res
     // .status(200)
     .render('Playlists/add', { logged_in: req.session.logged_in, user_id: req.session.user_id });
@@ -106,7 +106,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   // delete a category by its `id` value
   try {
     const delPlaylistData = await Playlist.destroy({
@@ -121,19 +121,19 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.delete('/deletesong/:id', async (req, res) => {
-  // delete a category by its `id` value
-  try {
-    const delPlaylistSongData = await PlaylistSong.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-    res.status(200).json(delPlaylistSongData)
-  }
-  catch (err) {
-    res.status(500).json(err)
-  }
-});
+// router.delete('/deletesong/:id', async (req, res) => {
+//   // delete a category by its `id` value
+//   try {
+//     const delPlaylistSongData = await PlaylistSong.destroy({
+//       where: {
+//         id: req.params.id
+//       }
+//     })
+//     res.status(200).json(delPlaylistSongData)
+//   }
+//   catch (err) {
+//     res.status(500).json(err)
+//   }
+// });
 
 module.exports = router;
