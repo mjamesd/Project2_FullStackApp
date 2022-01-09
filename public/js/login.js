@@ -14,11 +14,13 @@ const loginFormHandler = async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    if (response.ok) {
-      window.location.href ='/';
-    } else {
-      alert('Failed to log in');
-    }
+    setTimeout(() => {
+      if (response.ok) {
+        window.location.href ='/';
+      } else {
+        alert('Failed to log in');
+      }
+    }, 500);
   }
 };
 
