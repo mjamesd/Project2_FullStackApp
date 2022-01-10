@@ -1,22 +1,25 @@
 const router = require('express').Router();
-const { Artist, Song } = require('../models');
+const { Artist, Song, Genre } = require('../models');
 const withAuth = require('../utils/auth');
 
+// Prefix of these routes is '/songs'
 
-
-// Prefix of these routes is '/api/songs'
-// GET route for artist
-router.get('/', withAuth, async(req, res) => {
+// GET-ALL songs
+router.get('/', async(req, res) => {
     try {
-        const artists = await Song.findAll({
-            raw: true,
+        const songsData = await Song.findAll({
             order: [
                 ['name', 'ASC'],
-            ]
+            ],
+            include: [{
+                model: Artist,
+                include: [Genre]
+            }]
         });
+        const songs = songsData.map((i) => i.get({ plain: true }));
         res
             .status(200)
-            .render('Artists/admin/index', { layout: 'admin', artists: artists });
+            .render('Songs/index', { songs: songs, logged_in: req.session.logged_in });
     } catch (err) {
         res
             .status(400)
@@ -24,40 +27,23 @@ router.get('/', withAuth, async(req, res) => {
     }
 });
 
-// for search
-router.get('/search/:term', async(req, res) => {
+// GET-ONE song
+router.get('/:id', async(req, res) => {
     try {
-        const results = await Song.findAll({
-            raw: true,
-            where: {
-                name: req.params.term
-            }
-        });
-        res
-            .status(200)
-            .json(results);
-    } catch (err) {
-        res
-            .status(500)
-            .json(err);
-    }
-});
-
-// View All of the songs
-router.get('/view/:id', withAuth, async(req, res) => {
-    try {
-        const song = await Song.findAll({
-            raw: true,
+        const songData = await Song.findAll({
             where: {
                 id: req.params.id
             },
             include: [{
                 model: Artist,
+                include: [Genre]
             }]
         });
+        let song = songData.map((i) => i.get({ plain: true }));
+        song = song[0];
         res
             .status(200)
-            .render('Artists/admin/view', { layout: 'admin', song: song });
+            .render('Songs/view', { song: song, logged_in: req.session.logged_in });
     } catch (err) {
         res
             .status(500)
@@ -65,36 +51,36 @@ router.get('/view/:id', withAuth, async(req, res) => {
     }
 });
 
-
-// Create a new song
-router.post('/add', withAuth, async(req, res) => {
-    try {
-        const songData = await Song.create(req.body);
-        res
-            .status(200)
-            .json(songData);
-        // res.redirect(200,'/api/artists');
-    } catch (err) {
-        res
-            .status(500)
-            .json(err);
-    }
+// Display "Create new Song" page
+router.get('/add', withAuth, async(req, res) => {
+    res
+        .status(200)
+        .render('Songs/add');
 });
 
-// Display edit Song page
+// Display "Edit Song" page
 router.get('/edit/:id', withAuth, async(req, res) => {
     try {
-        const song = await Song.findByPk(req.params.id, { raw: true });
+        const songData = await Song.findAll({
+            where: {
+                id: req.params.id
+            },
+            include: [{
+                model: Artist,
+                include: [Genre]
+            }]
+        });
+        let song = songData.map((i) => i.get({ plain: true }));
+        song = song[0];
         res
             .status(200)
-            .render('Artists/admin/edit', { layout: 'admin', song: song });
+            .render('Songs/edit', { song: song });
     } catch (err) {
         res
             .status(500)
             .json(err);
     }
 });
-
 
 router.delete("/:id", withAuth, async(req, res) => {
     try {
@@ -109,3 +95,6 @@ router.delete("/:id", withAuth, async(req, res) => {
 
     }
 })
+
+
+module.exports = router;

@@ -1,14 +1,16 @@
 module.exports = {
-  get_emoji: () => {
-    const randomNum = Math.random();
-    let book = "📗";
-
-    if (randomNum > 0.7) {
-      book = "📘";
-    } else if (randomNum > 0.4) {
-      book = "📙";
+  build_genres: (genres) => {
+    let genreString = '';
+    genres.forEach(genre => {
+      genreString += `<a href="/genres/${genre.id}" id="genre-${genre.id}">${genre.name}</a>, `;
+    });
+    genreString = genreString.substring(0, genreString.length - 2);
+    return genreString;
+  },
+  ifOr: (var1, var2) => {
+    if (var1 || var2) {
+      return true;
     }
-
-    return `<span for="img" aria-label="book">${book}</span>`;
+    return false;
   },
 };

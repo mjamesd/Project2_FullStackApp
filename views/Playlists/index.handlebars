@@ -1,17 +1,28 @@
-<h2>Playlists</h2>
-
+<h2>{{#if isMine}}My {{/if}}Playlists</h2>
+<nav>
+    <a class="btn btn-black" href="/playlists/add"><span class="material-icons-outlined">playlist_add_circle</span>create a new playlist</a>
+</nav>
 <div class="container">
     {{#each playlists as |playlist|}}
     
-    <div id="playlist-{{playlist.name}}" class="playlists index">
-        <a href="/api/playlists/{{playlist.id}}"><h3>{{playlist.name}}</h3></a>
+    <div id="playlist-{{playlist.id}}" class="playlists index">
+        <h3><a href="/playlists/{{playlist.id}}">{{playlist.name}}</a></h3>
         <p>{{playlist.description}}</p>
         {{#each playlist.songs as |song| }}
-           <p><a href="/songs/{{song.id}} ">Song Title: {{song.name}}</a><br>
-           {{#each song.artists as |artist|}} 
-            <a href="/artists/{{artist.id}}">Artist: {{artist.name}}, </a>
-           {{/each}}</p>
+            <li>
+                {{#if ../../logged_in}}
+                    <a class="btn btn-sm btn-info" href="/playlists/addSong/{{song.id}}"><span
+                        class="material-icons-outlined">playlist_add</span></a>
+                {{/if}}
+                {{#if ../../isMine}}
+                    <a class="btn btn-sm btn-danger" href="/playlists/removeSong/{{../playlist.id}}/{{song.id}}"><span
+                        class="material-icons-outlined">playlist_remove</span></a>
+                {{/if}}
+                <a href="/songs/{{song.id}}">{{song.name}}</a> by <a
+                    href="/artists/{{song.artists.[0].id}}">{{song.artists.[0].name}}</a>
+            </li>
         {{/each}}
+        </ul>
     </div>
 
     {{/each}}

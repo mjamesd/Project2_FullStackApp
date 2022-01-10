@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
         });
         res
             .status(200)
-            .render('Artists/index', { artists: artists });
+            .render('Artists/index', { artists: artists, logged_in: req.session.logged_in });
             // .json(artists)
     } catch (err) {
         req.session.message = `Could not retrieve Artists.`;
@@ -40,7 +40,7 @@ router.get('/:id', async (req, res) => {
             ]
         });
         res
-            .status(200).render('Artists/view', { artist: artist });
+            .status(200).render('Artists/view', { artist: artist, logged_in: req.session.logged_in });
             // .json(artist)
     } catch (err) {
         req.session.message = `Could not retrieve Artists.`;

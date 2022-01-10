@@ -1,0 +1,23 @@
+<h2>Add Song to Your Playlist</h2>
+
+<form class="form edit-form playlist" id="addSongToPlaylist">
+    <div class="form-group">
+        <p>Add <strong>"{{song.name}}" by {{song.artists.[0].name}}</strong> to which playlist?</p>
+        <input type="hidden" id="song_id" value="{{song.id}}" />
+    </div>
+    <div class="form-group">
+        <select id="playlist_id">
+            {{#each playlists as |playlist|}}
+            <option value="{{playlist.id}}">{{playlist.name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <button class="btn" type="submit">Add Song</button>
+    </div>
+    <div class="form-group">
+        <p>Or <a href="/playlists/add"><span class="material-icons-outlined">playlist_add_circle</span></a>create a new playlist.</p>
+    </div>
+</form>
+
+<script src="/js/playlist.js"></script>

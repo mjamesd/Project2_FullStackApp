@@ -1,86 +1,66 @@
 const router = require('express').Router();
-const session = require('express-session');
 const { Artist, ArtistGenre, ArtistSong, Genre, Playlist, PlaylistSong, Search, Song, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-// Prevent non logged in users from viewing the homepage
-
-router.get('/', withAuth, async (req, res) => {
-  if (session['logged_in'] == true) {
-    try {
-      let artists = await Artist.findAll(
-        {
-          raw: true,
-          attributes: ["id"],
-        }
-      );
-
-      for (let i = 0; i < artists.length; i++) {
-        artists[i] = artists[i];
-        let songs = await Song.findAll({
-          raw: true,
-          include: [
-            {
-              model: Artist,
-              where: {
-                id: artists[i].id,
-              }
-            }
-          ]
-        });
-        artists[i].songs = songs;
-
+// HOMEPAGE ROUTE
+router.get('/', async (req, res) => {
+  try {
+    let artists = await Artist.findAll(
+      {
+        raw: true,
+        attributes: ["id"],
       }
-      console.log('-------------------ARTISTS------------------>', artists[2]);
-      const randomArtistId = Math.floor(Math.random() * artists.length) + 1;
-      const artist = await Artist.findByPk(randomArtistId, {
-        raw: true,
-      });
-      const songs = await Song.findAll({
-        raw: true,
-        include: [
-          {
-            model: Artist,
-            where: {
-              id: randomArtistId
-            }
-          }
-        ],
-      });
-      const genresData = await Genre.findAll({
-        raw: true,
-        include: [
-          {
-            model: Artist,
-            where: {
-              id: randomArtistId
-            }
-          }
-        ],
-      });
-      let _genres = [];
-      for (let i = 0; i < genresData.length; i++) {
-        _genres.push(genresData[i].name)
-      }
-      const genres = _genres.join(', ');
+    );
+    const randomArtistId = artists[Math.floor(Math.random() * artists.length)].id;
+    const artistData = await Artist.findAll({
+      where: {
+        id: randomArtistId
+      },
+      limit: 1,
+      include: [Song, Genre]
+    });
+    let artist = artistData.map((i) => {
+      return i.get({ plain: true })
+    });
+    artist = artist[0]; // there is only one, but we need to use findAll so that we can use .map & .get
 
-      console.log('-----------LOGGED IN?------>>>>>>', req.session.logged_in);
-      res.render('homepage', {
-        layout: 'main',
+    console.log('-----------LOGGED IN?------>>>>>>', req.session.logged_in);
+
+    res
+      .status(200)
+      .render('homepage', {
         artist: artist,
-        songs: songs,
-        genres: genres,
         logged_in: req.session.logged_in,
       });
-    } catch (err) {
-      res
-        .status(500)
-        .render('500', { message: err });
-      // res.status(500).json(err);
-    }
-
-  } else (res.redirect['/login'])
+  } catch (err) {
+    res
+      .status(500)
+      .render('500', { message: err });
+    // res.status(500).json(err);
+  }
 });
+
+router.get('/mine', withAuth, async (req, res) => {
+  try {
+    const playlistData = await Playlist.findAll(
+      {
+        where: {
+          user_id: req.session.user_id
+        },
+        include: [{ model: User, },{ model: Song, include: [{ model: Artist }] }]
+      }
+    )
+    let playlists = playlistData.map((playlist) => {
+      return playlist.get({ plain: true });
+    })
+    res.status(200).render('Playlists/index', { playlists: playlists, logged_in: req.session.logged_in, isMine: true })
+  }
+  catch (err) {
+    res.status(500).json(err)
+  }
+});
+
+// LOGIN ROUTE
 router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
@@ -91,6 +71,13 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// new user sign up
+router.post('/signup', async (req, res) => {
+  const userSignup = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  };
 
 // new user sign up
 // const userSignup = {
@@ -119,7 +106,5 @@ router.post('/signup', (req, res) => {
   });
 });
 
-
-
+  
 module.exports = router;
-

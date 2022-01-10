@@ -31,6 +31,7 @@ router.post('/login', async (req, res) => {
       
       res.json({ user: userData, message: 'You are now logged in!' });
     });
+    // req.session.reload(() => res.redirect('/'));
 
   } catch (err) {
     res.status(400).json(err);
