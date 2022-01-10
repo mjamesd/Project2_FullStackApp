@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      
+
       res.json({ user: userData, message: 'You are now logged in!' });
     });
     // req.session.reload(() => res.redirect('/'));
@@ -48,6 +48,20 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+router.post('/signup', async (req, res) => {
+  try {
+    const userData= await User.create(
+      req.body
+    )
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+      res.json({ ok: userData })
+    })
+  } catch (err) { res.json(err) }
+});
+
 
 
 module.exports = router;

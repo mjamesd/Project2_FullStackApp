@@ -71,40 +71,4 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// new user sign up
-router.post('/signup', async (req, res) => {
-  const userSignup = {
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-// new user sign up
-// const userSignup = {
-
-//   username: req.body.username,
-//   email: req.body.email,
-//   password: req.body.password,
-// };
-
-// const newuser = new User(userSignup);
-// newuser.save(function (err, newuser) {
-//   if (err) {
-//     console.log(err);
-//   }
-//   req.session.user = newuser;
-//   req.session.loggedIn = true;
-//   req.session.save();
-router.post('/signup', (req, res) => {
-  User.create({
-    name: req.body.userName,
-    email: req.body.userEmail,
-    password: req.body.userPassword,
-  }).then(userinfo => {
-
-    req.session.save(() => { req.session.id = userinfo.id; req.session.logged_in = false; req.session.user = userinfo; res.json(userinfo) }).catch(err => { console.log(err) })
-  });
-});
-
-  
 module.exports = router;
