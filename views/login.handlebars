@@ -13,5 +13,36 @@
     <button class="btn btn-primary" type="submit">login</button>
   </div>
 </form>
+  
+          <button class="sign-up button is-block is-danger is-large is-fullwidth" onclick="showForm()">Sign
+            Up!</button>
+          <div class="Signup" id="Signup-form">
+            <form class="form-container" action="#" id="form" method="post">
+              <div class="form-content">
+                <h1 class="Create-title">Create Account</h1>
+                <br>
+                <br>
 
+                <label for="userName" class="text">Name</label>
+                <input class="signup-input" type="text" id="userName" placeholder="Enter your name" required>
+                <br>
+                <br>
+                <label for="userEmail" class="text"> Email</label>
+                <input class="signup-input" id="userEmail" type="text" placeholder="Enter Valid Email" required>
+                <br>
+                <br>
+                <label for="userPassword" class="text">Password</label>
+                <input class="signup-input" type="password" id="userPassword" placeholder="Create Password" required>
+
+                <br>
+                <br>
+                <div class="popup-btn">
+                  <button type="submit" class="btn">Create Account!</button>
+                  <button type="button" id="cancelForm" class="btn-cancel" onclick="closeForm()">Cancel</button>
+                </div>
+              </div>
+            </form>
+
+
+          </div>
 <script src="/js/login.js"></script>

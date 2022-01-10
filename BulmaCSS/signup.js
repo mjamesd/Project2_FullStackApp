@@ -1,10 +1,10 @@
 
 // Validating Empty Field
 function check_empty() {
-    if (document.getElementById('#signupForm').value == "" || document.getElementById('email').value == "" || document.getElementById('psw').value == "" || document.getElementById('#userName').value == "") {
+    if (document.getElementById('signupForm').value == "" || document.getElementById('userEmail').value == "" || document.getElementById('userPassword').value == "" || document.getElementById('userName').value == "") {
         alert("Fill All Fields !");
     } else {
-        document.getElementById('#signupForm').submit();
+        document.getElementById('signupForm').submit();
         alert(" Account Successfully Created!");
     }
 }
