@@ -12,6 +12,6 @@ router.use('/', homeRoutes);
 router.use('/api', apiRoutes);
 router.use('/artists', artistPublicRoutes);
 router.use('/search', searchRoutes);
-router.use('/songs', songPublicRoutes);
+//router.use('/songs', songPublicRoutes);
 
 module.exports = router;

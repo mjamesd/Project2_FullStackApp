@@ -49,30 +49,29 @@
                 <h1 class="Create-title">Create Account</h1>
                 <br>
                 <br>
-                <ol>
-                  <ul id="userName"></ul> <label class="text">Name</label>
-                  <input class="signup-input"type="text" placeholder="Enter your name" required>
-                  <br>
-                  <br>
-                  <ul for="email"></ul> <label class="text"> Email</label>
-                  <input class="signup-input"type="text" placeholder="Enter Valid Email" name="email" required>
-                  <br>
-                  <br>
-                  <ul for="psw"></ul><label class="text">Password</label>
-                  <input class="signup-input"type="password" placeholder="Create Password" name="psw" required>
-                </ol>
+
+                <label for="userName" class="text">Name</label>
+                <input class="signup-input" type="text" id="userName" placeholder="Enter your name" required>
+                <br>
+                <br>
+                <label for="userEmail" class="text"> Email</label>
+                <input class="signup-input" id="userEmail" type="text" placeholder="Enter Valid Email" required>
+                <br>
+                <br>
+                <label for="userPassword" class="text">Password</label>
+                <input class="signup-input" type="password" id="userPassword" placeholder="Create Password" required>
+
                 <br>
                 <br>
                 <div class="popup-btn">
-                <button  type="submit" class="btn">Create Account!</button> 
-                <button type="button" id="cancelForm" class="btn-cancel" onclick="closeForm()">Cancel</button>
-              </div>
+                  <button type="submit" class="btn">Create Account!</button>
+                  <button type="button" id="cancelForm" class="btn-cancel" onclick="closeForm()">Cancel</button>
+                </div>
               </div>
             </form>
 
 
           </div>
-          </form>
         </div>
       </div>
     </div>

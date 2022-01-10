@@ -10,6 +10,6 @@ const songRoutes = require('./songRoutes');
 router.use('/users', userRoutes);
 router.use('/playlists', playlistRoutes);
 router.use('/artists', artistRoutes);
-router.use('/songs', songRoutes);
+//router.use('/songs', songRoutes);
 
 module.exports = router;
