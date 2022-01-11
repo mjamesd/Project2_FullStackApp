@@ -1,11 +1,19 @@
-<h2>{{artist.[0].name}}</h2>
-
-<p><img id="artist-image-{{artist.[0].id}}" class="image" src="{{artist.[0].imgur_url}}" alt="{{artist.[0].name}} Image" /></p>
+<div class="message-header">
+    <h2>{{artist.[0].name}}</h2>
+</div>
+<p><img id="artist-image-{{artist.[0].id}}" class="image" src="{{artist.[0].imgur_url}}"
+        alt="{{artist.[0].name}} Image" /></p>
 
 {{#if artist.[1]}}
-<ul id="artist-songs-{{artist.[0].id}}">
-    {{#each artist as |song|}}
-    <li><a href="/songs/{{song.[songs.id]}}">{{song.[songs.name]}}</a></li>
-    {{/each}}
-</ul>
+<div class="card">
+    <div class="card-content">
+        <div class="content">
+            <ul id="artist-songs-{{artist.[0].id}}">
+                {{#each artist as |song|}}
+                <li><a href="/songs/{{song.[songs.id]}}">{{song.[songs.name]}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
 {{/if}}
