@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Melody Medley</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+
+
+</head>
+
+<body>
+<section class="hero is-success is-fullheight">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+      <header class="navbar">
+        <figure class="image is-16by16">
+          <img src="https://i.imgur.com/RXsLskK.png">
+        </figure>
+        <div class="container">
+          <div class="navbar-brand">
+           
+            <span class="navbar-burger" data-target="navbarMenuHeroC">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+          <div id="navbarMenuHeroC" class="navbar-menu">
+            <div class="navbar-end">
+              <a class="navbar-item is-active">
+                Home
+                <a href="./homepage-cards.html"><button type="button"></button></a>
+              </a>
+              <a class="navbar-item">
+                Log In/Register
+                <a href="./login.html"><button type="button"></button></a>
+              </a>
+              <a class="navbar-item">
+                  Create Playlist
+                  <a href="./createplaylist.html"><button type="button"></button></a>
+              </a>
+              <a class="navbar-item">
+                  Search Playlist
+                  <a href="./searchplaylist.html"><button type="button"></button></a>
+              </a>
+              <a class="navbar-item">
+                  View Playlist
+                  <a href="./viewplaylistsong.html"><button type="button"></button></a>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+  
+    <!-- Hero content: will be in the middle -->
+    <div class="container">
+     <input class="input" type="text" placeholder="Search for playlist name">
+    </div>
+    <article class="message">
+      <div class="message-header">
+        <p>Create New Playlist</p>
+      </div>
+      <div class="message-body">
+        <nav class="panel">
+          <p class="panel-heading">
+            Name
+          </p>
+          <div class="panel-block">
+            <p class="control has-icons-left">
+              <input class="input" type="text" placeholder="Name of playlist">
+            </p>
+          </div>
+          <p class="panel-tabs">
+            <a class="is-active">Save/Edit Playlist Name</a>
+          </p>
+          <nav class="panel">
+            <p class="panel-heading">
+              Description
+            </p>
+            <div class="panel-block">
+              <p class="control has-icons-left">
+                <input class="input" type="text" placeholder="What is playlist for">
+              </p>
+            </div>
+            <p class="panel-tabs">
+              <a class="is-active">Save/Edit Playlist Description</a>
+            </p>
+          <div class="panel-block">
+            <button class="button is-link is-outlined is-fullwidth">
+              Create!
+            </button>
+          </div>
+        </nav>
+      </div>
+    </article>
+    
