@@ -1,4 +1,10 @@
-body {
+.image{max-width: 250px !important;}
+body{margin:0 auto !important;
+width: 80% !important; 
+}
+
+
+/* body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/background.jpg")no-repeat center center fixed;
 }
 
@@ -124,4 +130,4 @@ display: inline;
  *.signup-input{
      padding: 1%;
      box-shadow: 1px 1px 1px rgb(77, 74, 74, .6);
- }
+ } */

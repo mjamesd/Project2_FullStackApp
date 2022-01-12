@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Melody Medley</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+
+
+</head>
+
+<body>
+<section class="hero is-success is-fullheight">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+      <header class="navbar">
+        <figure class="image is-16by16">
+          <img src="https://i.imgur.com/RXsLskK.png">
+        </figure>
+        <div class="container">
+          <div class="navbar-brand">
+           
+            <span class="navbar-burger" data-target="navbarMenuHeroC">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+          <div id="navbarMenuHeroC" class="navbar-menu">
+            <div class="navbar-end">
+              <a class="navbar-item" href="playlist.html">
+                Playlists
+              </a>
+              <a class="navbar-item" href="artists.html">
+                Artists
+              </a>
+              <a class="navbar-item" href="songs.html">
+                Songs
+              </a>
+              <a class="navbar-item" href="genres.html">
+                Genres
+              </a>
+              <a class="navbar-item" href="login.html">
+                Login
+              
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+    <div class="container">
+      
+    
+    </div>
+
+  <article class="message">
+    <div class="message-header">
+      <p>Artists</p>
+     
+    </div>
+    <div class="card">
+      <header class="card-header">
+          <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img src="data:image/jpeg;base64,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" alt="Album Image">
+                  </figure>
+                </div>
+        <p class="card-header-title">
+          Adele
+        </p>
+      </header>
+      <div class="card">
+        <header class="card-header">
+            <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimagesvc.meredithcorp.io%2Fv3%2Fmm%2Fimage%3Furl%3Dhttps%253A%252F%252Fstatic.onecms.io%252Fwp-content%252Fuploads%252Fsites%252F20%252F2021%252F09%252F24%252Fbeyonce-5.jpg&q=85" alt="Album Image">
+                    </figure>
+                  </div>
+          <p class="card-header-title">
+            Beyonce
+          </p>
+        </header>
+        <div class="card">
+          <header class="card-header">
+              <div class="card-content">
+                  <div class="media">
+                    <div class="media-left">
+                      <figure class="image is-48x48">
+                        <img src="https://www.rollingstone.com/wp-content/uploads/2018/06/rs-bob-dylan-f1e9093b-a9b8-4924-9d32-325cece7c662.jpg" alt="Artist Image">
+                    </div>
+            <p class="card-header-title">
+              Bob Dylan
+            </p>
+          </header>
+          <div class="card">
+            <header class="card-header">
+                <div class="card-content">
+                    <div class="media">
+                      <div class="media-left">
+                        <figure class="image is-48x48">
+                          <img src="https://www.nme.com/wp-content/uploads/2021/06/Portrait-of-JAY-Z-by-Raven-B.-Varona.jpg" Alt="Artist Image">
+                        </figure>
+                      </div>
+              <p class="card-header-title">
+                Jay-Z
+              </p>
+            </header>
+            <div class="card">
+              <header class="card-header">
+                  <div class="card-content">
+                      <div class="media">
+                        <div class="media-left">
+                          <figure class="image is-48x48">
+                            <img src="https://a57.foxnews.com/static.foxbusiness.com/foxbusiness.com/content/uploads/2021/12/1024/512/johnlegend.jpg?ve=1&tl=1" Alt="Artist Image">
+                          </figure>
+                        </div>
+                <p class="card-header-title">
+                  John Legend
+                </p>
+              </header>
+              <div class="card">
+                <header class="card-header">
+                    <div class="card-content">
+                        <div class="media">
+                          <div class="media-left">
+                            <figure class="image is-48x48">
+                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4ej6hGWFhtaM6SYuvwXX_an7s1Sv8n56raA&usqp=CAU" Alt="Artist Image">
+                            </figure>
+                          </div>
+                  <p class="card-header-title">
+                    Lupe Fiasco
+                  </p>
+                </header>
+                <div class="card">
+                  <header class="card-header">
+                      <div class="card-content">
+                          <div class="media">
+                            <div class="media-left">
+                              <figure class="image is-48x48">
+                                <img src="https://www.insidehook.com/wp-content/uploads/2021/10/rhcp.jpg?fit=2400%2C1600" Alt="Artist Image">
+                              </figure>
+                            </div>
+                    <p class="card-header-title">
+                      Red Hot Chili Peppers
+                    </p>
+                  </header>
+                  <div class="card">
+                    <header class="card-header">
+                        <div class="card-content">
+                            <div class="media">
+                              <div class="media-left">
+                                <figure class="image is-48x48">
+                                  <img src="https://variety.com/wp-content/uploads/2020/12/Roddy-Ricch-Variety-Hitmakers-3-16x9-1.jpg" Alt="Artist Image">
+                                </figure>
+                              </div>
+                      <p class="card-header-title">
+                        Roddy Ricch
+                      </p>
+                    </header>
+                    <div class="card">
+                      <header class="card-header">
+                          <div class="card-content">
+                              <div class="media">
+                                <div class="media-left">
+                                  <figure class="image is-48x48">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Beatles_ad_1965_just_the_beatles_crop.jpg" Alt="Artist Image">
+                                  </figure>
+                                </div>
+                        <p class="card-header-title">
+                          The Beatles
+                        </p>
+                      </header>
+                      <div class="card">
+                        <header class="card-header">
+                            <div class="card-content">
+                                <div class="media">
+                                  <div class="media-left">
+                                    <figure class="image is-48x48">
+                                      <img src="https://www.okayplayer.com/wp-content/uploads/2020/12/GettyImages-1279229280.jpg" Alt="Artist Image">
+                                    </figure>
+                                  </div>
+                          <p class="card-header-title">
+                            Wu Tang Clan
+                          </p>
+                        </header>
+    <!--Hero footer will be at bottom-->
+    <div class="hero-foot">
+        <footer class="hero-footer">
+            <div class="content has-text-centered">
+              <p>
+                <strong>Melody Medley</strong> by <a href="https://github.com/jcnolan9/Project2_FullStackApp">2022 Melodly Medley Dev Team</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+              </p>
+            </div>
+          </footer>

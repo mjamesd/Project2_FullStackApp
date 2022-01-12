@@ -1,46 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/img/favicon.jpg" />
-  <title>Playlist Creator Online</title>
-  <link rel="stylesheet" href="/css/jass.css">
-  <link rel="stylesheet" href="/css/playlistcreator.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melody Medley</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+  <!-- Bulma Version 0.9.0-->
+  <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+  <link rel="stylesheet" type="text/css" href="/css/playlistcreator.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+
+
+
 </head>
 
 <body>
-  <header class="display-flex justify-space-between align-center p-2">
-    <span class="display-flex p-2">
-      <a href="/"><img src="/img/logo.png" class="logo-img" alt="Logo" aria-label="Melody Medley logo" /></a>
-      <h1>Melody Medley</h1>
-    </span>
-    <nav>
-      <a class="btn btn-black" href="/playlists/">playlists</a>
-      <a class="btn btn-black" href="/artists/">artists</a>
-      <a class="btn btn-black" href="/songs/">songs</a>
-      <a class="btn btn-black" href="/genres/">genres</a>
-      {{#if logged_in}}
-      <a class="btn btn-info" href="/mine">my playlists</a>
-      <button class="btn" id="logout">logout</button>
-      {{else}}
-      <a class="btn" id="login" href="/login">login</a>
-      {{/if}}
-    </nav>
-  </header>
-  <main class="container container-fluid mt-5">
-    {{{ body }}}
+  <section class="hero is-success is-fullheight">
+    <div class="hero-head">
+      <header class="navbar">
+        <figure class="image is-16by16">
+          <img src="https://i.imgur.com/RXsLskK.png">
+        </figure>
+        <div class="container">
+          <div class="navbar-brand">
 
-  </main>
-  <footer>
-    &copy; 2022 Music Medley Dev Team
-  </footer>
+            <span class="navbar-burger" data-target="navbarMenuHeroC">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+          <div id="navbarMenuHeroC" class="navbar-menu">
+            <div class="navbar-end">
+              <a class="navbar-item" href="/playlists/">
+                Playlists
 
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
+              </a>
+              <a class="navbar-item" href="/artists/">
+                Artists
+           
+              </a>
+              <a class="navbar-item" href="/songs/" >
+                Songs
+           
+              </a>
+              <a class="navbar-item" href="/genres/">
+                Genres
+           
+              </a>
+              {{#if logged_in}}
+              <a class="navbar-item" href="/mine">my playlists</a>
+              <button class="navbar-item" id="logout">logout</button>
+              {{else}}
+              <a class="navbar-item" id="login" href="/login">login</a>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+    <article class="message" style="color:black"> 
+      {{{ body }}}
+
+    </article>
+    <footer class="hero-footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Melody Medley</strong> by <a href="https://github.com/jcnolan9/Project2_FullStackApp">2022 Melodly
+            Medley Dev Team</a>. The source code is licensed
+          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+          is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+      </div>
+    </footer>
+
+    {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
 </body>
 
 </html>

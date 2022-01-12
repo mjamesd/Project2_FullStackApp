@@ -1,10 +1,15 @@
-<h2>Genres</h2>
-
+<div class="message-header">
+    <p>Genres</p>
+</div>
 <div class="container">
     {{#each genres as |genre|}}
     <div id="genre-{{genre.id}}" class="genres index">
         <h3><a href="/genres/{{genre.id}}">{{genre.name}}</a></h3>
-        <ul id="genre-{{genre.id}}">
+  <div class="card">
+  <div class="card-content">
+    <div class="content">
+      
+      <ul id="genre-{{genre.id}}">
         {{#each genre.artists as |artist| }}
             <li>
                 <a href="/artists/{{artist.id}}">{{artist.name}}</a>
@@ -23,6 +28,9 @@
             </li>
         {{/each}}
         </ul>
+         </div>
+  </div>
+</div>   
     </div>
     {{/each}}
 </div>

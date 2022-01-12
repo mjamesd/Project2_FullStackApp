@@ -1,10 +1,15 @@
-<h2>{{#if isMine}}My {{/if}}Playlists</h2>
+
+<div class="message-header">
+    <h2>{{#if isMine}}My {{/if}}Playlists</h2>
+</div>
 <nav>
     <a class="btn btn-black" href="/playlists/add"><span class="material-icons-outlined">playlist_add_circle</span>create a new playlist</a>
 </nav>
 <div class="container">
     {{#each playlists as |playlist|}}
-    
+      <div class="card">
+  <div class="card-content">
+    <div class="content">
     <div id="playlist-{{playlist.id}}" class="playlists index">
         <h3><a href="/playlists/{{playlist.id}}">{{playlist.name}}</a></h3>
         <p>{{playlist.description}}</p>
@@ -23,6 +28,9 @@
             </li>
         {{/each}}
         </ul>
+    </div>
+    </div>
+</div>   
     </div>
 
     {{/each}}

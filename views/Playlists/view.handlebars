@@ -1,6 +1,10 @@
+<div class="message-header">
 <h2>{{playlist.name}}</h2>
 <p>{{playlist.description}}</p>
-
+</div>
+    <div class="card">
+  <div class="card-content">
+    <div class="content">
 <ul id="playlist-songs-{{playlist.name}}">
     {{#each playlist.songs as |song|}}
     <li>
@@ -17,3 +21,6 @@
     </li>
     {{/each}}
 </ul>
+      </div>
+        </div>
+    </div>
