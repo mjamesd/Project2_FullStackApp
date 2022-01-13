@@ -30,7 +30,7 @@ Next, open `connection.js` in the `connection` folder. Change the MySQL user and
 
 ## Usage
 
-Open a terminal, navigate to the directory containing the `index.js` file, then run `node server` to start the app.
+Open a terminal, navigate to the directory containing the `server.js` file, then run `node server` to start the app.
 
 ## License
 
